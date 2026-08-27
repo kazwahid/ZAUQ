@@ -183,7 +183,17 @@ export const Card: React.FC<CardProps> = ({
 
         {/* Bottom Details Content Overlay - only in Stream Mode */}
         {isStreamMode ? (
-          <div className="absolute bottom-3 left-3 right-16 z-10 text-white pointer-events-none">
+          <div className="absolute bottom-3 left-3 right-16 z-10 text-white pointer-events-none flex flex-col gap-1">
+            {/* AI Recommendation Reason */}
+            <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/40 backdrop-blur-md text-[10px] text-stone-200 border border-white/10 w-fit mb-0.5">
+              <Sparkles className="w-2.5 h-2.5 text-white shrink-0" />
+              <span className="truncate font-medium">
+                {item.matchedTags && item.matchedTags.length > 0
+                  ? `Matched: ${item.matchedTags.slice(0, 2).map((t) => t.value).join(' & ')}`
+                  : `Curated: ${[item.silhouette?.[0], item.occasion?.[0]].filter(Boolean).join(' • ') || 'Zauq Edit'}`}
+              </span>
+            </div>
+
             {item.brand && (
               <p className="text-[10px] uppercase tracking-widest text-stone-300 font-semibold mb-0.5 drop-shadow-sm">
                 {item.brand}
@@ -199,7 +209,7 @@ export const Card: React.FC<CardProps> = ({
             )}
 
             {/* Compact Aesthetic Tag Badges on overlay */}
-            <div className="flex flex-wrap items-center gap-1.5 mt-2">
+            <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
               {item.occasion?.slice(0, 2).map((occ) => (
                 <span
                   key={occ}

@@ -150,18 +150,14 @@ export const BottomDock: React.FC<BottomDockProps> = ({
               transition={{ duration: 0.25 }}
               className="w-full flex flex-col gap-2"
             >
-              {/* Specificity Cascade & Active Breadcrumbs Tray */}
+              {/* Specificity Cascade & Structured AI Intent Trace */}
               {activeFilters.length > 0 && (
-                <div className="flex flex-col gap-1.5 w-full bg-[#111111]/95 backdrop-blur-xl text-white p-2.5 rounded-3xl border border-white/10 shadow-md">
-                  <div className="flex items-center justify-between px-2 text-[11px]">
+                <div className="flex flex-col gap-2 w-full bg-[#111111]/95 backdrop-blur-xl text-white p-3 rounded-3xl border border-white/10 shadow-lg">
+                  <div className="flex items-center justify-between px-1 text-[11px]">
                     <div className="flex items-center gap-1.5 font-medium text-stone-300">
-                      <Sparkles className="w-3 h-3 text-white" />
-                      <span>
-                        Specificity:{' '}
-                        <strong className="text-white font-semibold">
-                          {specificityLevel.label}
-                        </strong>
-                      </span>
+                      <Sparkles className="w-3.5 h-3.5 text-white animate-pulse" />
+                      <span className="tracking-wide uppercase text-[10px] text-stone-400">Zauq Understood:</span>
+                      <strong className="text-white font-semibold">{specificityLevel.label}</strong>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] text-stone-400 font-mono">
@@ -175,7 +171,7 @@ export const BottomDock: React.FC<BottomDockProps> = ({
                         }}
                         className="text-[10px] text-stone-300 hover:text-white underline transition-colors"
                       >
-                        Reset
+                        Reset All
                       </button>
                     </div>
                   </div>
@@ -189,13 +185,14 @@ export const BottomDock: React.FC<BottomDockProps> = ({
                     />
                   </div>
 
-                  <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-1">
+                  {/* Structured Extracted Tags Trace */}
+                  <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-0.5">
                     {activeFilters.map((filter) => (
                       <span
                         key={filter.id}
-                        className="flex items-center gap-1 pl-2.5 pr-1.5 py-0.5 rounded-full bg-white/15 text-white text-[11px] font-medium shrink-0 border border-white/10"
+                        className="flex items-center gap-1.5 pl-3 pr-1.5 py-1 rounded-full bg-white/15 text-white text-[11px] font-medium shrink-0 border border-white/10 shadow-xs"
                       >
-                        <span className="max-w-[130px] truncate">{filter.label}</span>
+                        <span className="max-w-[140px] truncate">{filter.label}</span>
                         <button
                           type="button"
                           onClick={() => handleFilterRemove(filter.id)}
@@ -210,20 +207,18 @@ export const BottomDock: React.FC<BottomDockProps> = ({
                 </div>
               )}
 
-              {/* Context-Aware Recommendation Pills */}
-              <div className="w-full flex items-center justify-center gap-1.5 py-0.5 flex-nowrap overflow-hidden">
+              {/* AI Guided Prompt Suggestions */}
+              <div className="w-full flex items-center justify-center gap-1.5 py-0.5 flex-nowrap overflow-x-auto no-scrollbar">
                 {displayedSuggestions.map((sug) => (
                   <button
                     key={sug.label}
                     type="button"
                     onClick={() => handleSuggestionClick(sug)}
                     disabled={isLoading}
-                    className="shrink px-3 sm:px-3.5 py-1 rounded-full text-[10px] sm:text-xs font-medium text-[#2C2724] bg-white/95 hover:bg-white border border-[#E8E2D9] shadow-xs hover:border-[#D3C9BE] transition-all active:scale-95 disabled:opacity-50 flex items-center gap-1 truncate"
+                    className="shrink-0 px-3 sm:px-3.5 py-1 rounded-full text-[10px] sm:text-xs font-medium text-[#2C2724] bg-white/95 hover:bg-white border border-[#E8E2D9] shadow-xs hover:border-[#D3C9BE] transition-all active:scale-95 disabled:opacity-50 flex items-center gap-1"
                   >
-                    {inputVal ? (
-                      <Sparkles className="w-2.5 h-2.5 text-[#786E65] shrink-0" />
-                    ) : null}
-                    <span className="truncate">{sug.label}</span>
+                    <Sparkles className="w-2.5 h-2.5 text-[#786E65] shrink-0" />
+                    <span>{sug.label}</span>
                   </button>
                 ))}
               </div>
@@ -248,8 +243,8 @@ export const BottomDock: React.FC<BottomDockProps> = ({
                   onChange={(e) => setInputVal(e.target.value)}
                   placeholder={
                     activeFilters.length > 0
-                      ? 'Add another filter (e.g. linen, silk, black)...'
-                      : 'Search style, fabric, vibe, or occasion...'
+                      ? "Refine (e.g., 'under $200', 'more relaxed', 'in linen')..."
+                      : "Describe look (e.g., 'quiet luxury silk dress for dinner')..."
                   }
                   disabled={isLoading}
                   aria-label="Refine discovery feed"

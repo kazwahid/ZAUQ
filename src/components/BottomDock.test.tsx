@@ -48,7 +48,7 @@ describe('BottomDock Component (Search & Cascade)', () => {
     const compactPill = screen.getByLabelText('Open search and refinement bar');
     fireEvent.click(compactPill);
 
-    const input = await screen.findByPlaceholderText(/Search style, fabric/i);
+    const input = await screen.findByPlaceholderText(/Describe look/i);
     expect(input).toBeDefined();
   });
 
