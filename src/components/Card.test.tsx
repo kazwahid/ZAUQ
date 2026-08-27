@@ -44,7 +44,7 @@ describe('Card Component (Reels Mode & Interactions)', () => {
     expect(screen.getByText('Silk Slip Midi Dress')).toBeDefined();
     expect(screen.getByText('Atelier Nöir')).toBeDefined();
     expect(screen.getByText('$185')).toBeDefined();
-    expect(screen.getByText('85% Match')).toBeDefined();
+    expect(screen.getByText('Strong Match')).toBeDefined();
   });
 
   it('triggers like and save callbacks when interaction buttons are clicked', () => {

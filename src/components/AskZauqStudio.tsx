@@ -15,8 +15,8 @@ const SUGGESTED_BRIEFS = [
   { label: 'Summer Wedding', query: 'I need an elegant summer wedding guest outfit under $250' },
   { label: 'Quiet Luxury Dinner', query: 'Quiet luxury neutral linen outfit for dinner' },
   { label: 'Black Tie Gala', query: 'Black tie silk gown for a formal gala' },
-  { label: 'Coastal Resort', query: 'Breezy coastal resort wear in linen' },
-  { label: 'Tailored Workwear', query: 'Tailored minimalist trousers and blazer for work' },
+  { label: 'Resort Wear', query: 'Breezy coastal resort wear in linen' },
+  { label: 'Workwear', query: 'Tailored minimalist trousers and blazer for work' },
 ];
 
 export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
@@ -60,38 +60,46 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
 
         {/* Hero Title & Subtitle */}
         <h1 className="font-serif text-3xl sm:text-4xl text-[#111111] font-medium tracking-tight leading-tight mb-2">
-          What are you in the mood to wear?
+          Describe what you&apos;re looking for
         </h1>
         <p className="text-xs sm:text-sm text-[#786E65] leading-relaxed max-w-md mx-auto mb-6">
-          Tell Zauq what you’re looking for. We’ll turn your intent into a considered edit.
+          Describe an occasion, aesthetic, fabric, color, or budget. Tell Zauq what you want. Get a focused edit around it.
         </p>
 
         {/* Main AI Input Command Surface */}
-        <form onSubmit={handleSubmit} className="relative flex items-center mb-5">
-          <input
-            type="text"
-            value={inputVal}
-            onChange={(e) => setInputVal(e.target.value)}
-            placeholder="Describe your look (e.g., 'summer wedding under $250')..."
-            disabled={isLoading}
-            autoFocus
-            className="w-full pl-5 pr-14 py-4 rounded-2xl bg-[#FAF8F5] border border-[#E8E2D9] text-xs sm:text-sm text-[#111111] placeholder-[#8C827A] focus:outline-none focus:border-[#111111] focus:bg-white transition-all shadow-inner"
-          />
+        <form onSubmit={handleSubmit} className="relative flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mb-5">
+          <div className="relative flex-1">
+            <input
+              type="text"
+              value={inputVal}
+              onChange={(e) => setInputVal(e.target.value)}
+              placeholder="Something elegant for a summer wedding under $250..."
+              disabled={isLoading}
+              autoFocus
+              className="w-full pl-4 pr-4 py-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E8E2D9] text-xs sm:text-sm text-[#111111] placeholder-[#8C827A] focus:outline-none focus:border-[#111111] focus:bg-white transition-all shadow-inner"
+            />
+          </div>
           <button
             type="submit"
             disabled={!inputVal.trim() || isLoading}
-            className="absolute right-2 p-3 rounded-xl bg-[#111111] text-white hover:bg-black disabled:opacity-40 transition-all active:scale-95 shadow-md flex items-center justify-center"
-            aria-label="Find my look"
+            className="flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-[#111111] text-white hover:bg-black disabled:opacity-40 transition-all active:scale-95 shadow-md shrink-0 font-medium text-xs sm:text-sm"
+            aria-label="Ask Zauq to find look"
           >
             {isLoading ? (
-              <Loader2 className="w-4 h-4 animate-spin text-white" />
+              <>
+                <Loader2 className="w-4 h-4 animate-spin text-white" />
+                <span>Curating...</span>
+              </>
             ) : (
-              <ArrowRight className="w-4 h-4 text-white" />
+              <>
+                <span>Ask Zauq</span>
+                <ArrowRight className="w-4 h-4 text-white" />
+              </>
             )}
           </button>
         </form>
 
-        {/* Loading Analyzing State */}
+        {/* Restrained Loading Analyzing Transition State */}
         <AnimatePresence>
           {isLoading && (
             <motion.div
@@ -101,15 +109,15 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
               className="flex items-center justify-center gap-2 py-2 mb-3 text-xs text-[#111111] font-medium"
             >
               <Sparkles className="w-3.5 h-3.5 animate-spin text-[#111111]" />
-              <span>Interpreting your style brief and ranking pieces...</span>
+              <span>Zauq is shaping your edit…</span>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Curated Suggested Briefs */}
+        {/* One-Click Suggested Briefs */}
         <div className="text-left mb-4">
           <span className="text-[10px] font-bold uppercase tracking-wider text-[#786E65] block mb-2 px-1">
-            Suggested Style Briefs
+            Suggested Briefs (1-Click)
           </span>
           <div className="flex flex-wrap gap-1.5">
             {SUGGESTED_BRIEFS.map((brief) => (
@@ -135,7 +143,7 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
               className="flex items-center gap-1.5 text-xs text-[#786E65] hover:text-[#111111] font-medium transition-colors"
             >
               <Compass className="w-3.5 h-3.5" />
-              <span>Or browse the full catalog in Explore</span>
+              <span>Or browse the full catalogue in Explore</span>
             </button>
           </div>
         )}

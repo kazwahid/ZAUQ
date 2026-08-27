@@ -308,8 +308,8 @@ export default function Home() {
         )}
       </main>
 
-      {/* Always Present AI Search Refinement Dock on For You Stream */}
-      {currentTab === 'feed' && (
+      {/* AI Refinement Dock on Curated Edit View */}
+      {currentTab === 'feed' && activeFilters.length > 0 && (
         <BottomDock
           onRefine={handleRefine}
           isLoading={isLoading}

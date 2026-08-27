@@ -109,11 +109,11 @@ export const Feed: React.FC<FeedProps> = ({
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="absolute top-2 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-xl border border-[#E8E2D9] shadow-md text-xs"
+          className="absolute top-2 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-xl border border-[#E8E2D9] shadow-md text-xs"
         >
           <Sparkles className="w-3.5 h-3.5 text-[#111111] animate-pulse" />
-          <span className="font-semibold text-[#111111]">Your Zauq Edit</span>
-          <span className="text-[10px] text-[#786E65] font-mono">({items.length} pieces curated)</span>
+          <span className="font-semibold uppercase tracking-wider text-[10px] text-[#111111]">YOUR EDIT</span>
+          <span className="text-[10px] text-[#786E65] font-mono">({Math.min(items.length, 8)} pieces selected)</span>
           <button
             type="button"
             onClick={() => {

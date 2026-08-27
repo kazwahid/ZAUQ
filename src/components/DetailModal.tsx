@@ -87,7 +87,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({
               {item.score > 0 ? (
                 <div className="absolute top-3.5 left-3.5 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#111111]/90 backdrop-blur-md text-white text-[11px] font-medium border border-white/15">
                   <Sparkles className="w-3 h-3 text-white" />
-                  <span>{Math.round(item.score * 10)}% Match</span>
+                  <span>Strong Match</span>
                 </div>
               ) : (
                 <span className="absolute top-3.5 left-3.5 px-2.5 py-0.5 rounded-full bg-white/90 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider text-[#111111]">

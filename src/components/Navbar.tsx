@@ -54,23 +54,23 @@ export const Navbar: React.FC<NavbarProps> = ({
       }`}
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-2">
-        {/* Left: Preferences Button */}
+        {/* Left: My Style Profile Button */}
         <div className="flex items-center gap-1.5 shrink-0">
           <button
             onClick={onOpenProfile}
             className="flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-full text-xs font-medium text-[#2C2724] bg-white/90 hover:bg-white border border-[#E8E2D9] shadow-xs transition-all active:scale-95"
-            aria-label="Tune taste preferences"
+            aria-label="Open My Style profile"
           >
             <SlidersHorizontal className="w-3.5 h-3.5 text-[#111111]" />
-            <span className="hidden xs:inline sm:inline">Preferences</span>
+            <span className="hidden xs:inline sm:inline">My Style</span>
           </button>
 
           {activeFilterCount > 0 && (
             <button
               onClick={onResetSession}
               className="p-1.5 rounded-full text-[#786E65] hover:text-[#111111] hover:bg-white/80 transition-colors"
-              title="Reset all filters"
-              aria-label="Reset taste filters"
+              title="Reset to Ask Zauq"
+              aria-label="Reset taste brief"
             >
               <RotateCcw className="w-3.5 h-3.5" />
             </button>
@@ -87,7 +87,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             ZAUQ
           </button>
 
-          {/* Primary View Switcher Tabs (For You vs Explore) */}
+          {/* Primary View Switcher Tabs (Ask vs Explore) */}
           <nav className="flex items-center p-1 rounded-full bg-white/90 border border-[#E8E2D9] shadow-xs" aria-label="Main Navigation">
             <button
               type="button"
@@ -100,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               aria-current={currentTab === 'feed' ? 'page' : undefined}
             >
               <Sparkles className="w-3 h-3" />
-              <span>{activeFilterCount > 0 ? 'Your Edit' : 'Ask Zauq'}</span>
+              <span>{activeFilterCount > 0 ? 'Your Edit' : 'Ask'}</span>
             </button>
 
             <button
