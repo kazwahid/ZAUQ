@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
-import { AnimatePresence } from 'framer-motion';
-import { ChevronUp, ChevronDown } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ChevronUp, ChevronDown, Sparkles, RotateCcw } from 'lucide-react';
 import { RankedCatalogItem } from '@/types/catalog';
 import { Card } from './Card';
 import { EmptyState } from './EmptyState';
@@ -81,6 +81,36 @@ export const Feed: React.FC<FeedProps> = ({
 
   return (
     <section className="relative w-full h-[calc(100dvh-3.75rem)] flex items-center justify-center overflow-hidden">
+      {/* Screen Reader Live Region for filter changes */}
+      <div className="sr-only" aria-live="polite">
+        {hasActiveFilters
+          ? `Feed refined with active filters. Showing ${items.length} matched looks.`
+          : 'Showing all fashion looks in discovery feed.'}
+      </div>
+
+      {/* Floating Active Edit Header */}
+      {hasActiveFilters && items.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="absolute top-2 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/90 backdrop-blur-md border border-[#E8E2D9] shadow-xs text-xs"
+        >
+          <Sparkles className="w-3 h-3 text-[#111111]" />
+          <span className="font-medium text-[#111111]">Your Curated Edit</span>
+          <span className="text-[10px] text-[#786E65] font-mono">({items.length} looks)</span>
+          <button
+            type="button"
+            onClick={() => {
+              triggerHaptic('light');
+              onClearAllFilters();
+            }}
+            className="ml-1 pl-2 border-l border-[#E8E2D9] text-[10px] text-[#786E65] hover:text-[#111111] underline transition-colors"
+          >
+            Reset
+          </button>
+        </motion.div>
+      )}
+
       {items.length === 0 ? (
         <div className="w-full max-w-lg mx-auto p-4">
           <EmptyState
@@ -97,7 +127,7 @@ export const Feed: React.FC<FeedProps> = ({
             className="w-full h-full overflow-y-scroll snap-y snap-mandatory no-scrollbar flex flex-col items-center"
           >
             <AnimatePresence>
-              {items.map((item, idx) => (
+              {items.map((item) => (
                 <div
                   key={item.id}
                   className="w-full max-w-sm sm:max-w-[420px] h-[calc(100dvh-4.25rem)] snap-start snap-always shrink-0 flex items-center justify-center p-2.5 sm:p-3 pb-16 sm:pb-20"

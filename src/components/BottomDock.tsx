@@ -60,15 +60,26 @@ export const BottomDock: React.FC<BottomDockProps> = ({
     return { label: 'Laser-Focused', percent: 100, tag: `${count} Filters Active` };
   }, [activeFilters]);
 
-  // Dynamically compute suggestions
+  // Dynamically compute suggestions: Refine Pivots if filters active, Inspiration Starters if empty
   const displayedSuggestions = useMemo(() => {
-    if (!inputVal.trim()) {
-      return TRENDING_AESTHETICS.filter(
-        (item) => !activeFilterLabels.some((l) => l.toLowerCase() === item.label.toLowerCase())
-      ).slice(0, 3);
+    if (inputVal.trim()) {
+      return getContextualSuggestions(inputVal, activeFilterLabels, 3);
     }
-    return getContextualSuggestions(inputVal, activeFilterLabels, 3);
-  }, [inputVal, activeFilterLabels]);
+    if (activeFilters.length > 0) {
+      return [
+        { label: '+ More Minimal', query: 'minimalist solid clean' },
+        { label: '+ Pure Silk', query: 'mulberry silk sheen' },
+        { label: '+ More Relaxed', query: 'relaxed oversized flowy' },
+        { label: '+ Noir Palette', query: 'black monochrome noir' },
+      ];
+    }
+    return [
+      { label: 'Quiet Luxury Dinner', query: 'quiet luxury neutral dinner' },
+      { label: 'Coastal Resort Linen', query: 'linen resort beach vacation' },
+      { label: 'Black Tie Silk Gala', query: 'silk gown gala formal' },
+      { label: 'Tailored Workwear', query: 'tailored structured office' },
+    ];
+  }, [inputVal, activeFilters.length, activeFilterLabels]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
