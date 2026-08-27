@@ -14,8 +14,13 @@ export const metadata: Metadata = {
     'single session fashion',
   ],
   authors: [{ name: 'Zauq Studio' }],
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
   openGraph: {
-    title: 'Zauq — AI Fashion Discovery Feed',
+    title: 'Zauq (ذوق) — AI Fashion Discovery Feed',
     description:
       'Curate your personal aesthetic in seconds. Natural language narrowing without account barriers.',
     type: 'website',
@@ -25,7 +30,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#FAF7F2',
+  themeColor: '#FAF8F5',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,

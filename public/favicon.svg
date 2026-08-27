@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="85%" stop-color="#FAF8F5"/>
+      <stop offset="100%" stop-color="#EFEAE1"/>
+    </radialGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#141110" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Luxury Circular Canvas -->
+  <circle cx="256" cy="256" r="248" fill="url(#bgGrad)" stroke="#E0D8CC" stroke-width="6"/>
+  <circle cx="256" cy="256" r="236" fill="none" stroke="#D3C9BC" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+
+  <!-- Urdu Calligraphy for ZAUQ (ذوق) -->
+  <g filter="url(#softShadow)" fill="#1A1615">
+    <text 
+      x="50%" 
+      y="54%" 
+      dominant-baseline="central" 
+      text-anchor="middle" 
+      font-family="'Amiri', 'Lateef', 'Scheherazade New', 'Noto Naskh Arabic', 'Traditional Arabic', serif" 
+      font-size="210" 
+      font-weight="700"
+      letter-spacing="2"
+      direction="rtl"
+    >
+      ذوق
+    </text>
+  </g>
+</svg>

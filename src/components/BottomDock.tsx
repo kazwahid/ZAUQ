@@ -197,7 +197,7 @@ export const BottomDock: React.FC<BottomDockProps> = ({
           onSubmit={handleSubmit}
           layout
           onClick={() => setIsCollapsed(false)}
-          className={`w-full relative flex items-center p-1.5 sm:p-2 rounded-full bg-white/95 backdrop-blur-2xl border transition-all duration-300 shadow-lg ${
+          className={`w-full relative flex items-center p-1.5 sm:p-2 rounded-full bg-white/95 backdrop-blur-2xl border transition-all duration-300 shadow-lg outline-none focus-within:outline-none focus-within:ring-0 ${
             isFocused
               ? 'border-[#D3C9BE] bg-white shadow-xl'
               : 'border-[#E8E2D9] hover:border-[#D3C9BE]'
@@ -229,7 +229,7 @@ export const BottomDock: React.FC<BottomDockProps> = ({
             }
             disabled={isLoading}
             aria-label="Refine discovery feed"
-            className="w-full bg-transparent text-[#111111] placeholder-[#8C827A] text-xs sm:text-sm font-normal focus:outline-none pr-16 rounded-full"
+            className="w-full bg-transparent text-[#111111] placeholder-[#8C827A] text-xs sm:text-sm font-normal border-0 border-none outline-none focus:outline-none focus:ring-0 focus:border-none ring-0 shadow-none focus:shadow-none pr-16 rounded-full"
           />
 
           <div className="absolute right-1.5 sm:right-2 flex items-center gap-1">

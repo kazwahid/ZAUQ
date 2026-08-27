@@ -50,7 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <header
       className={`sticky top-0 z-40 w-full bg-[#FAF8F5]/90 backdrop-blur-xl border-b border-[#E8E2D9]/80 transition-transform duration-300 ease-in-out ${
-        isVisible ? 'translate-y-0' : '-translate-y-full sm:translate-y-0'
+        isVisible ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-2">
@@ -77,14 +77,19 @@ export const Navbar: React.FC<NavbarProps> = ({
           )}
         </div>
 
-        {/* Center: Brand & Main Instagram/TikTok Navigation Tabs */}
+        {/* Center: Brand (ZAUQ • ذوق) & Main Instagram/TikTok Navigation Tabs */}
         <div className="flex items-center gap-3 sm:gap-6 justify-center">
           <button
             onClick={() => onSelectTab('feed')}
-            className="font-serif text-lg sm:text-2xl tracking-[0.2em] uppercase text-[#111111] font-medium hidden lg:block mr-2"
+            className="hidden lg:flex items-center gap-2 mr-1 group"
             aria-label="Zauq Home"
           >
-            ZAUQ
+            <span className="font-serif text-lg sm:text-2xl tracking-[0.2em] uppercase text-[#111111] font-medium group-hover:opacity-80 transition-opacity">
+              ZAUQ
+            </span>
+            <span className="font-urdu text-xl text-[#786E65] font-normal leading-none select-none">
+              ذوق
+            </span>
           </button>
 
           {/* Primary View Switcher Tabs (For You vs Explore) */}

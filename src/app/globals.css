@@ -16,9 +16,19 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Accessible focus visible outlines */
-  *:focus-visible {
-    @apply outline-none ring-2 ring-[#111111] ring-offset-2 ring-offset-[#FAF8F5];
+  /* Accessible focus visible outlines for buttons & links */
+  button:focus-visible,
+  a:focus-visible {
+    @apply outline-none ring-2 ring-[#111111]/40 ring-offset-2 ring-offset-[#FAF8F5];
+  }
+
+  /* Seamless frameless text inputs & search bars */
+  input:focus,
+  input:focus-visible,
+  textarea:focus,
+  textarea:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
   }
 }
 
