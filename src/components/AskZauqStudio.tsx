@@ -117,7 +117,7 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
         {/* One-Click Suggested Briefs */}
         <div className="text-left mb-4">
           <span className="text-[10px] font-bold uppercase tracking-wider text-[#786E65] block mb-2 px-1">
-            Suggested Briefs (1-Click)
+            Suggested Briefs
           </span>
           <div className="flex flex-wrap gap-1.5">
             {SUGGESTED_BRIEFS.map((brief) => (
