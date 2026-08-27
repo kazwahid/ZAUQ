@@ -73,14 +73,12 @@ export const Card: React.FC<CardProps> = ({
   return (
     <motion.article
       layout
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.96 }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       className={`group relative flex flex-col rounded-3xl bg-white overflow-hidden transition-all duration-300 border ${
-        item.score > 0
-          ? 'border-[#111111]/30 ring-1 ring-[#111111]/10 shadow-lg'
-          : 'border-[#E8E2D9] shadow-sm hover:shadow-xl'
+        isStreamMode ? 'h-full max-h-[80dvh] sm:max-h-[82dvh] w-full shadow-lg border-[#E8E2D9]' : 'aspect-[3/4] border-[#E8E2D9] shadow-xs hover:shadow-md'
       }`}
       aria-label={`${item.name} by ${item.brand || 'Zauq'}`}
     >
@@ -89,9 +87,7 @@ export const Card: React.FC<CardProps> = ({
         onClick={() => onClickDetail?.(item)}
         onTouchEnd={handleDoubleTap}
         onDoubleClick={handleDoubleTap}
-        className={`relative w-full overflow-hidden bg-[#F4EFEA] cursor-pointer select-none ${
-          isStreamMode ? 'aspect-[4/5] sm:aspect-[4/5]' : 'aspect-[3/4]'
-        }`}
+        className="relative w-full h-full overflow-hidden bg-[#F4EFEA] cursor-pointer select-none"
       >
         {/* Main Fashion Look Image */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -99,7 +95,7 @@ export const Card: React.FC<CardProps> = ({
           src={item.image}
           alt={item.name}
           loading="lazy"
-          className="h-full w-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-700 ease-out pointer-events-none"
+          className="h-full w-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-700 ease-out pointer-events-none"
         />
 
         {/* Cinematic Vignette Gradient Overlays */}
