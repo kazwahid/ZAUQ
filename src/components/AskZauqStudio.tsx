@@ -42,58 +42,56 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
   };
 
   return (
-    <div className="relative w-full min-h-[calc(100dvh-4rem)] flex items-center justify-center p-4 sm:p-6 overflow-hidden">
+    <div className="relative w-full h-[calc(100dvh-7.5rem)] flex items-center justify-center p-3 sm:p-4 overflow-hidden">
       {/* Ambient Breathing Background Glow */}
-      <div className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-gradient-to-tr from-[#E8E2D9]/60 via-[#F2ECE4]/80 to-transparent blur-3xl pointer-events-none -z-10 animate-pulse" />
+      <div className="absolute w-72 sm:w-80 h-72 sm:h-80 rounded-full bg-gradient-to-tr from-[#E8E2D9]/60 via-[#F2ECE4]/80 to-transparent blur-3xl pointer-events-none -z-10 animate-pulse" />
 
       <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: 15 }}
+        initial={{ opacity: 0, scale: 0.97, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-lg mx-auto bg-white/95 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 border border-[#E8E2D9] shadow-2xl text-center"
+        className="w-full max-w-lg mx-auto bg-white/95 backdrop-blur-2xl rounded-3xl p-5 sm:p-7 border border-[#E8E2D9] shadow-2xl text-center"
       >
         {/* Stylist Pill */}
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#111111] text-white text-[11px] font-semibold tracking-wider uppercase mb-3.5 shadow-sm">
-          <Sparkles className="w-3.5 h-3.5 text-white animate-pulse" />
+        <div className="inline-flex items-center gap-1.5 px-3 py-0.8 rounded-full bg-[#111111] text-white text-[10.5px] font-semibold tracking-wider uppercase mb-3 shadow-xs">
+          <Sparkles className="w-3 h-3 text-white animate-pulse" />
           <span>Ask Zauq Stylist</span>
         </div>
 
         {/* Hero Title & Subtitle */}
-        <h1 className="font-serif text-3xl sm:text-4xl text-[#111111] font-medium tracking-tight leading-tight mb-2">
+        <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#111111] font-medium tracking-tight leading-tight mb-2">
           What are you in the mood to wear?
         </h1>
-        <p className="text-xs sm:text-sm text-[#786E65] leading-relaxed max-w-md mx-auto mb-6">
+        <p className="text-xs sm:text-sm text-[#786E65] leading-relaxed max-w-md mx-auto mb-5">
           Describe an occasion, aesthetic, fabric, color, or budget. Tell Zauq what you want. Get a focused edit around it.
         </p>
 
-        {/* Main AI Input Command Surface */}
-        <form onSubmit={handleSubmit} className="relative flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mb-5">
-          <div className="relative flex-1">
-            <input
-              type="text"
-              value={inputVal}
-              onChange={(e) => setInputVal(e.target.value)}
-              placeholder="Something elegant for a summer wedding under $250..."
-              disabled={isLoading}
-              autoFocus
-              className="w-full pl-4 pr-4 py-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E8E2D9] text-xs sm:text-sm text-[#111111] placeholder-[#8C827A] focus:outline-none focus:border-[#111111] focus:bg-white transition-all shadow-inner"
-            />
-          </div>
+        {/* Seamless Unified Spotlight Command Bar */}
+        <form onSubmit={handleSubmit} className="relative flex items-center mb-4">
+          <input
+            type="text"
+            value={inputVal}
+            onChange={(e) => setInputVal(e.target.value)}
+            placeholder="Something elegant for a summer wedding under $250..."
+            disabled={isLoading}
+            autoFocus
+            className="w-full pl-4 sm:pl-5 pr-28 sm:pr-32 py-3 sm:py-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E8E2D9] text-xs sm:text-sm text-[#111111] placeholder-[#8C827A] focus:outline-none focus:border-[#111111] focus:bg-white transition-all shadow-inner"
+          />
           <button
             type="submit"
             disabled={!inputVal.trim() || isLoading}
-            className="flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-[#111111] text-white hover:bg-black disabled:opacity-40 transition-all active:scale-95 shadow-md shrink-0 font-medium text-xs sm:text-sm"
+            className="absolute right-1.5 flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-[#111111] text-white hover:bg-black disabled:opacity-40 transition-all active:scale-95 shadow-sm font-medium text-xs shrink-0"
             aria-label="Ask Zauq to find look"
           >
             {isLoading ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin text-white" />
-                <span>Curating...</span>
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-white" />
+                <span>Curating</span>
               </>
             ) : (
               <>
                 <span>Ask Zauq</span>
-                <ArrowRight className="w-4 h-4 text-white" />
+                <ArrowRight className="w-3.5 h-3.5 text-white" />
               </>
             )}
           </button>
@@ -103,10 +101,10 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
         <AnimatePresence>
           {isLoading && (
             <motion.div
-              initial={{ opacity: 0, y: -6 }}
+              initial={{ opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="flex items-center justify-center gap-2 py-2 mb-3 text-xs text-[#111111] font-medium"
+              className="flex items-center justify-center gap-1.5 py-1 mb-2 text-xs text-[#111111] font-medium"
             >
               <Sparkles className="w-3.5 h-3.5 animate-spin text-[#111111]" />
               <span>Zauq is shaping your edit…</span>
@@ -115,8 +113,8 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
         </AnimatePresence>
 
         {/* One-Click Suggested Briefs */}
-        <div className="text-left mb-4">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-[#786E65] block mb-2 px-1">
+        <div className="text-left mb-3.5">
+          <span className="text-[9.5px] font-bold uppercase tracking-wider text-[#786E65] block mb-1.5 px-1">
             Suggested Briefs
           </span>
           <div className="flex flex-wrap gap-1.5">
@@ -126,7 +124,7 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
                 type="button"
                 onClick={() => handleBriefClick(brief.query)}
                 disabled={isLoading}
-                className="px-3.5 py-1.5 rounded-full bg-[#FAF8F5] hover:bg-[#F2ECE4] border border-[#E8E2D9] text-[11px] text-[#2C2724] font-medium transition-all active:scale-95 shadow-2xs hover:border-[#111111]/30"
+                className="px-3 py-1.2 rounded-full bg-[#FAF8F5] hover:bg-[#F2ECE4] border border-[#E8E2D9] text-[10.5px] text-[#2C2724] font-medium transition-all active:scale-95 shadow-2xs hover:border-[#111111]/30"
               >
                 {brief.label}
               </button>
@@ -135,12 +133,12 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
         </div>
 
         {/* Direct Catalog Explore Alternate & Story Links */}
-        <div className="pt-4 border-t border-[#F2ECE4] flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[#786E65]">
+        <div className="pt-3 border-t border-[#F2ECE4] flex flex-col sm:flex-row items-center justify-between gap-1.5 text-xs text-[#786E65]">
           {onExploreCatalog ? (
             <button
               type="button"
               onClick={onExploreCatalog}
-              className="flex items-center gap-1.5 hover:text-[#111111] font-medium transition-colors"
+              className="flex items-center gap-1.5 hover:text-[#111111] font-medium transition-colors text-[11px]"
             >
               <Compass className="w-3.5 h-3.5" />
               <span>Or browse the full catalogue in Explore</span>
