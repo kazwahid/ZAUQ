@@ -2,7 +2,7 @@
 
 > **Etymology:** *Zauq* (ذوق) is the Urdu word for cultivated aesthetic taste, discernment, and personal style.
 
-[![Live Deployment](https://img.shields.io/badge/Live_Demo-Vercel-black?logo=vercel)](https://zauq-kazwahids-projects.vercel.app)
+[![Live Deployment](https://img.shields.io/badge/Live_Demo-onzauq.vercel.app-black?logo=vercel)](https://onzauq.vercel.app)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-kazwahid%2FZAUQ-181717?logo=github)](https://github.com/kazwahid/ZAUQ)
 [![Tests Passing](https://img.shields.io/badge/Tests-16%20Passed-success?logo=vitest)](https://vitest.dev)
 [![Next.js 14](https://img.shields.io/badge/Next.js-14.2-black?logo=next.js)](https://nextjs.org)
@@ -30,7 +30,7 @@
                         ┌─────────────────────────────────┐
                         │    Edge Route: /api/interpret   │
                         │  • Rate Limiting (45 req/min)   │
-                        │  • Google Gemini 1.5 Flash      │
+                        │  • Google Gemini 3.6 Flash      │
                         │  • Strict JSON Schema & Zod     │
                         │  • 5.5s Timeout + Safe Fallback │
                         └────────────────┬────────────────┘
