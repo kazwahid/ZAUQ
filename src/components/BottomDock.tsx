@@ -67,9 +67,10 @@ export const BottomDock: React.FC<BottomDockProps> = ({
     }
     if (activeFilters.length > 0) {
       return [
+        { label: '+ Lower Price', query: 'budget under $150 affordable' },
         { label: '+ More Minimal', query: 'minimalist solid clean' },
-        { label: '+ Pure Silk', query: 'mulberry silk sheen' },
-        { label: '+ More Relaxed', query: 'relaxed oversized flowy' },
+        { label: '+ More Formal', query: 'formal elegant dressy' },
+        { label: '+ In Silk', query: 'mulberry silk satin sheen' },
         { label: '+ Noir Palette', query: 'black monochrome noir' },
       ];
     }

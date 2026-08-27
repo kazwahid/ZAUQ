@@ -184,13 +184,14 @@ export const Card: React.FC<CardProps> = ({
         {/* Bottom Details Content Overlay - only in Stream Mode */}
         {isStreamMode ? (
           <div className="absolute bottom-3 left-3 right-16 z-10 text-white pointer-events-none flex flex-col gap-1">
-            {/* AI Recommendation Reason */}
-            <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/40 backdrop-blur-md text-[10px] text-stone-200 border border-white/10 w-fit mb-0.5">
-              <Sparkles className="w-2.5 h-2.5 text-white shrink-0" />
+            {/* AI Recommendation Reason - Why this piece? */}
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] text-white border border-white/15 w-fit mb-1 shadow-sm">
+              <Sparkles className="w-3 h-3 text-white shrink-0" />
               <span className="truncate font-medium">
+                <strong className="text-stone-300 font-normal">Why this piece: </strong>
                 {item.matchedTags && item.matchedTags.length > 0
-                  ? `Matched: ${item.matchedTags.slice(0, 2).map((t) => t.value).join(' & ')}`
-                  : `Curated: ${[item.silhouette?.[0], item.occasion?.[0]].filter(Boolean).join(' • ') || 'Zauq Edit'}`}
+                  ? `${item.matchedTags.slice(0, 2).map((t) => t.value).join(' + ')} match your brief`
+                  : `${[item.silhouette?.[0], item.occasion?.[0]].filter(Boolean).join(' • ') || 'Curated silhouette'} aligns with your taste`}
               </span>
             </div>
 

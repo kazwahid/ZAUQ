@@ -7,7 +7,7 @@
 [![Tests Passing](https://img.shields.io/badge/Tests-16%20Passed-success?logo=vitest)](https://vitest.dev)
 [![Next.js 14](https://img.shields.io/badge/Next.js-14.2-black?logo=next.js)](https://nextjs.org)
 [![TypeScript 5](https://img.shields.io/badge/TypeScript-5.6-blue?logo=typescript)](https://www.typescriptlang.org)
-[![WCAG 2.1 AA](https://img.shields.io/badge/Accessibility-WCAG%202.1%20AA-green)](https://www.w3.org/WAI/WCAG21/quickref/)
+> **One-Line Proposition:** *Zauq turns what you have in mind into what’s worth looking at.*
 
 ---
 

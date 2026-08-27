@@ -1,5 +1,7 @@
 # Capstone Portfolio Submission: ZAUQ (ذوق)
 
+> **One-Line Proposition:** *Zauq turns what you have in mind into what’s worth looking at.*
+
 ## 1. Project Brief
 **Zauq** is a gate-free, single-session AI fashion discovery engine designed for individuals seeking occasion-specific outfits without getting bogged down by 30-checkbox filter trees or brittle keyword search queries. Traditional e-commerce platforms struggle to interpret aesthetic and mood descriptors (*"understated old money linen for a coastal dinner"*), while social algorithms prioritize endless doom-scrolling over time-boxed decision resolution. Zauq bridges this gap by combining **natural language semantic interpretation** with a **deterministic scoring client engine** inside a 1-product-at-a-time reels snap-scroll interface.
 
