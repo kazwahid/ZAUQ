@@ -48,7 +48,7 @@ export const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
     <AnimatePresence>
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 flex justify-end"
+          className="fixed inset-0 z-50 flex justify-start"
           role="dialog"
           aria-modal="true"
           aria-labelledby="profile-drawer-title"
@@ -64,29 +64,24 @@ export const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
 
           {/* Drawer Panel */}
           <motion.div
-            initial={{ x: '100%' }}
+            initial={{ x: '-100%' }}
             animate={{ x: 0 }}
-            exit={{ x: '100%' }}
+            exit={{ x: '-100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-            className="relative w-full max-w-md bg-[#FAF8F5] h-full shadow-2xl flex flex-col z-10 border-l border-[#E8E2D9]"
+            className="relative w-full max-w-md bg-[#FAF8F5] h-full shadow-2xl flex flex-col z-10 border-r border-[#E8E2D9]"
           >
             {/* Header */}
-            <div className="p-5 border-b border-[#E8E2D9] flex items-center justify-between bg-white/90 backdrop-blur-md">
+            <div className="p-4 sm:p-5 border-b border-[#E8E2D9] flex items-center justify-between bg-white/90 backdrop-blur-md">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-full bg-[#111111] flex items-center justify-center text-white">
                   <SlidersHorizontal className="w-4 h-4" />
                 </div>
-                <div>
-                  <h2
-                    id="profile-drawer-title"
-                    className="font-serif text-lg font-semibold text-[#111111]"
-                  >
-                    Taste Preferences
-                  </h2>
-                  <p className="text-xs text-[#786E65]">
-                    Tune your single-session curation parameters
-                  </p>
-                </div>
+                <h2
+                  id="profile-drawer-title"
+                  className="font-serif text-lg sm:text-xl font-semibold text-[#111111]"
+                >
+                  Preferences
+                </h2>
               </div>
 
               <button

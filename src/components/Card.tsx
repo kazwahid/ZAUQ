@@ -142,87 +142,98 @@ export const Card: React.FC<CardProps> = ({
           )}
         </AnimatePresence>
 
-        {/* Right-Side Social Action Rail (TikTok / Reels Layout) */}
-        <div className="absolute right-3 bottom-4 z-20 flex flex-col items-center gap-3">
-          {/* Like Button */}
-          <button
-            type="button"
-            onClick={handleLikeClick}
-            className={`flex flex-col items-center justify-center w-10 h-10 rounded-full backdrop-blur-md transition-all active:scale-90 shadow-md ${
-              isLiked
-                ? 'bg-[#FF2D55] text-white shadow-[#FF2D55]/30 ring-2 ring-white/30'
-                : 'bg-black/45 text-white hover:bg-black/70 hover:text-[#FF2D55]'
-            }`}
-            aria-label={isLiked ? 'Liked outfit' : 'Like outfit'}
-          >
-            <Heart className={`w-4 h-4 ${isLiked ? 'fill-white' : ''}`} />
-          </button>
+        {/* Right-Side Social Action Rail (TikTok / Reels Layout - only in Stream Mode) */}
+        {isStreamMode && (
+          <div className="absolute right-3 bottom-4 z-20 flex flex-col items-center gap-3">
+            {/* Like Button */}
+            <button
+              type="button"
+              onClick={handleLikeClick}
+              className={`flex flex-col items-center justify-center w-10 h-10 rounded-full backdrop-blur-md transition-all active:scale-90 shadow-md ${
+                isLiked
+                  ? 'bg-[#FF2D55] text-white shadow-[#FF2D55]/30 ring-2 ring-white/30'
+                  : 'bg-black/45 text-white hover:bg-black/70 hover:text-[#FF2D55]'
+              }`}
+              aria-label={isLiked ? 'Liked outfit' : 'Like outfit'}
+            >
+              <Heart className={`w-4 h-4 ${isLiked ? 'fill-white' : ''}`} />
+            </button>
 
-          {/* Bookmark / Wardrobe Save Button */}
-          <button
-            type="button"
-            onClick={handleSaveClick}
-            className={`flex flex-col items-center justify-center w-10 h-10 rounded-full backdrop-blur-md transition-all active:scale-90 shadow-md ${
-              isSaved
-                ? 'bg-white text-[#111111] ring-2 ring-white/40'
-                : 'bg-black/45 text-white hover:bg-black/70'
-            }`}
-            aria-label={isSaved ? 'Remove from wardrobe' : 'Save to wardrobe'}
-          >
-            <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-[#111111]' : ''}`} />
-          </button>
+            {/* Bookmark / Wardrobe Save Button */}
+            <button
+              type="button"
+              onClick={handleSaveClick}
+              className={`flex flex-col items-center justify-center w-10 h-10 rounded-full backdrop-blur-md transition-all active:scale-90 shadow-md ${
+                isSaved
+                  ? 'bg-white text-[#111111] ring-2 ring-white/40'
+                  : 'bg-black/45 text-white hover:bg-black/70'
+              }`}
+              aria-label={isSaved ? 'Remove from wardrobe' : 'Save to wardrobe'}
+            >
+              <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-[#111111]' : ''}`} />
+            </button>
 
-          {/* Share Button */}
-          <button
-            type="button"
-            onClick={handleShare}
-            className="flex flex-col items-center justify-center w-10 h-10 rounded-full bg-black/45 text-white hover:bg-black/70 backdrop-blur-md transition-all active:scale-90 shadow-md"
-            aria-label="Share outfit"
-          >
-            <Share2 className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* Bottom Details Content Overlay (Reels / Social style) */}
-        <div className="absolute bottom-3 left-3 right-16 z-10 text-white pointer-events-none">
-          {item.brand && (
-            <p className="text-[10px] uppercase tracking-widest text-stone-300 font-semibold mb-0.5 drop-shadow-sm">
-              {item.brand}
-            </p>
-          )}
-          <h3 className="font-serif text-base sm:text-lg font-medium leading-snug truncate drop-shadow-md">
-            {item.name}
-          </h3>
-          {item.description && (
-            <p className="text-[11px] text-stone-200/90 line-clamp-1 mt-0.5 leading-relaxed drop-shadow-sm">
-              {item.description}
-            </p>
-          )}
-
-          {/* Compact Aesthetic Tag Badges on overlay */}
-          <div className="flex flex-wrap items-center gap-1.5 mt-2">
-            {item.occasion?.slice(0, 2).map((occ) => (
-              <span
-                key={occ}
-                className="px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-[9px] font-medium text-white tracking-wide border border-white/10"
-              >
-                #{occ}
-              </span>
-            ))}
-            {item.palette?.slice(0, 1).map((pal) => (
-              <span
-                key={pal}
-                className="px-2 py-0.5 rounded-full bg-black/30 backdrop-blur-md text-[9px] font-medium text-stone-200 tracking-wide border border-white/10"
-              >
-                {pal}
-              </span>
-            ))}
+            {/* Share Button */}
+            <button
+              type="button"
+              onClick={handleShare}
+              className="flex flex-col items-center justify-center w-10 h-10 rounded-full bg-black/45 text-white hover:bg-black/70 backdrop-blur-md transition-all active:scale-90 shadow-md"
+              aria-label="Share outfit"
+            >
+              <Share2 className="w-4 h-4" />
+            </button>
           </div>
-        </div>
+        )}
+
+        {/* Bottom Details Content Overlay - only in Stream Mode */}
+        {isStreamMode ? (
+          <div className="absolute bottom-3 left-3 right-16 z-10 text-white pointer-events-none">
+            {item.brand && (
+              <p className="text-[10px] uppercase tracking-widest text-stone-300 font-semibold mb-0.5 drop-shadow-sm">
+                {item.brand}
+              </p>
+            )}
+            <h3 className="font-serif text-base sm:text-lg font-medium leading-snug truncate drop-shadow-md">
+              {item.name}
+            </h3>
+            {item.description && (
+              <p className="text-[11px] text-stone-200/90 line-clamp-1 mt-0.5 leading-relaxed drop-shadow-sm">
+                {item.description}
+              </p>
+            )}
+
+            {/* Compact Aesthetic Tag Badges on overlay */}
+            <div className="flex flex-wrap items-center gap-1.5 mt-2">
+              {item.occasion?.slice(0, 2).map((occ) => (
+                <span
+                  key={occ}
+                  className="px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-[9px] font-medium text-white tracking-wide border border-white/10"
+                >
+                  #{occ}
+                </span>
+              ))}
+              {item.palette?.slice(0, 1).map((pal) => (
+                <span
+                  key={pal}
+                  className="px-2 py-0.5 rounded-full bg-black/30 backdrop-blur-md text-[9px] font-medium text-stone-200 tracking-wide border border-white/10"
+                >
+                  {pal}
+                </span>
+              ))}
+            </div>
+          </div>
+        ) : (
+          /* Subtle Instagram Explore Tile Hover Overlay */
+          <div className="absolute inset-0 bg-black/0 hover:bg-black/25 transition-colors flex items-end p-2.5 sm:p-3 pointer-events-none opacity-0 group-hover:opacity-100">
+            <span className="text-white text-xs font-medium truncate drop-shadow-md">
+              {item.name}
+            </span>
+          </div>
+        )}
       </div>
 
-      {/* Matched Specificity Tags Footer (Active when filters match) */}
-      {item.matchedTags && item.matchedTags.length > 0 && (
+      {/* Matched Specificity Tags Footer (Active only in Stream Mode when filters match) */}
+      {isStreamMode && item.matchedTags && item.matchedTags.length > 0 && (
         <div className="px-3.5 py-2 bg-white flex flex-wrap items-center gap-1.5 border-t border-[#F4EFEA]">
           <span className="text-[10px] font-semibold text-[#786E65] uppercase tracking-wider">
             Matched:

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { ArrowRight, Loader2, X, Search, Sparkles } from 'lucide-react';
+import { ArrowUp, Loader2, X, Search, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ActiveFilter } from '@/types/catalog';
 import { TRENDING_AESTHETICS, getContextualSuggestions, SuggestionItem } from '@/lib/suggestions';
@@ -35,7 +35,7 @@ export const BottomDock: React.FC<BottomDockProps> = ({
       const currentScrollY = window.scrollY;
       if (currentScrollY < 60) {
         setIsCollapsed(false);
-      } else if (currentScrollY > lastScrollY.current + 12 && !isFocused) {
+      } else if (currentScrollY > lastScrollY.current + 10 && !isFocused) {
         setIsCollapsed(true);
       } else if (currentScrollY < lastScrollY.current - 10) {
         setIsCollapsed(false);
@@ -94,7 +94,7 @@ export const BottomDock: React.FC<BottomDockProps> = ({
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none pb-3 sm:pb-6 px-3 sm:px-6 bg-gradient-to-t from-[#FAF8F5] via-[#FAF8F5]/90 to-transparent pt-6 transition-all duration-300">
+    <div className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none pb-3 sm:pb-6 px-3 sm:px-6 transition-all duration-300">
       <div className="max-w-xl mx-auto flex flex-col items-center gap-2 pointer-events-auto">
         {/* Specificity Cascade & Active Breadcrumbs Tray */}
         <AnimatePresence>
@@ -193,70 +193,94 @@ export const BottomDock: React.FC<BottomDockProps> = ({
         )}
 
         {/* Main Floating Pill-Shaped Natural Language Search Dock */}
-        <motion.form
-          onSubmit={handleSubmit}
-          layout
-          onClick={() => setIsCollapsed(false)}
-          className={`w-full relative flex items-center p-1.5 sm:p-2 rounded-full bg-white/95 backdrop-blur-2xl border border-[#E8E2D9] transition-all duration-300 shadow-sm outline-none focus-within:outline-none focus-within:ring-0 focus-within:border-[#D3C9BE] ${
-            isCollapsed ? 'max-w-xs sm:max-w-xl opacity-90 hover:opacity-100' : ''
-          }`}
-        >
-          <div className="pl-3 sm:pl-3.5 pr-2 text-[#786E65] flex items-center justify-center shrink-0">
-            {isLoading ? (
-              <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin text-[#111111]" />
-            ) : (
-              <Search className="w-4 h-4 sm:w-5 sm:h-5 text-[#786E65]" />
-            )}
-          </div>
-
-          <input
-            type="text"
-            value={inputVal}
-            onChange={(e) => setInputVal(e.target.value)}
-            onFocus={() => {
-              setIsFocused(true);
-              setIsCollapsed(false);
-            }}
-            onBlur={() => setIsFocused(false)}
-            placeholder={
-              isCollapsed
-                ? 'Tap to search & refine...'
-                : activeFilters.length > 0
-                ? 'Add another filter (e.g. linen, silk, black)...'
-                : 'Search style, fabric, vibe, or occasion...'
-            }
-            disabled={isLoading}
-            aria-label="Refine discovery feed"
-            className="w-full bg-transparent text-[#111111] placeholder-[#8C827A] text-xs sm:text-sm font-normal border-0 border-none outline-none focus:outline-none focus:ring-0 focus:border-none ring-0 shadow-none focus:shadow-none pr-16 rounded-full"
-          />
-
-          <div className="absolute right-1.5 sm:right-2 flex items-center gap-1">
-            {inputVal && !isLoading && (
-              <button
-                type="button"
-                onClick={() => {
-                  triggerHaptic('light');
-                  setInputVal('');
-                }}
-                className="p-1.5 rounded-full text-[#8C827A] hover:text-[#111111] transition-colors"
-                aria-label="Clear input text"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            )}
-
-            <button
-              type="submit"
-              disabled={!inputVal.trim() || isLoading}
-              className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#111111] text-white hover:bg-[#2C2724] disabled:opacity-30 disabled:hover:bg-[#111111] transition-all shadow-xs active:scale-95 shrink-0"
-              aria-label="Submit refinement"
+        <AnimatePresence mode="wait">
+          {isCollapsed ? (
+            <motion.button
+              key="collapsed-pill"
+              initial={{ scale: 0.85, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.85, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => {
+                triggerHaptic('light');
+                setIsCollapsed(false);
+              }}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/95 backdrop-blur-xl border border-[#E8E2D9] text-[#111111] shadow-md hover:shadow-lg transition-all active:scale-95 text-xs font-medium"
+              aria-label="Expand search dock"
             >
-              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            </button>
-          </div>
-        </motion.form>
+              <Search className="w-3.5 h-3.5 text-[#111111]" />
+              <span>Search & Refine</span>
+              {activeFilters.length > 0 && (
+                <span className="w-1.5 h-1.5 rounded-full bg-[#111111]" />
+              )}
+            </motion.button>
+          ) : (
+            <motion.form
+              key="expanded-form"
+              onSubmit={handleSubmit}
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="w-full relative flex items-center p-1.5 sm:p-2 rounded-full bg-white/95 backdrop-blur-xl border border-[#E8E2D9] transition-all duration-300 shadow-sm outline-none focus-within:outline-none focus-within:ring-0 focus-within:border-[#D3C9BE]"
+            >
+              <div className="pl-3 sm:pl-3.5 pr-2 text-[#786E65] flex items-center justify-center shrink-0">
+                {isLoading ? (
+                  <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin text-[#111111]" />
+                ) : (
+                  <Search className="w-4 h-4 sm:w-5 sm:h-5 text-[#786E65]" />
+                )}
+              </div>
+
+              <input
+                type="text"
+                value={inputVal}
+                onChange={(e) => setInputVal(e.target.value)}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                placeholder={
+                  activeFilters.length > 0
+                    ? 'Add another filter (e.g. linen, silk, black)...'
+                    : 'Search style, fabric, vibe, or occasion...'
+                }
+                disabled={isLoading}
+                aria-label="Refine discovery feed"
+                className="w-full bg-transparent text-[#111111] placeholder-[#8C827A] text-xs sm:text-sm font-normal border-0 border-none outline-none focus:outline-none focus:ring-0 focus:border-none ring-0 shadow-none focus:shadow-none pr-16 rounded-full"
+              />
+
+              <div className="absolute right-1.5 sm:right-2 flex items-center gap-1">
+                {inputVal && !isLoading && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      triggerHaptic('light');
+                      setInputVal('');
+                    }}
+                    className="p-1.5 rounded-full text-[#8C827A] hover:text-[#111111] transition-colors"
+                    aria-label="Clear input text"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={!inputVal.trim() || isLoading}
+                  className={`flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full transition-all active:scale-90 shadow-xs shrink-0 ${
+                    inputVal.trim() && !isLoading
+                      ? 'bg-[#111111] text-white hover:bg-black hover:scale-105'
+                      : 'bg-[#EFEAE3] text-[#A89E95] cursor-not-allowed'
+                  }`}
+                  aria-label="Submit refinement"
+                >
+                  <ArrowUp className="w-4 h-4 stroke-[2.5]" />
+                </button>
+              </div>
+            </motion.form>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
 };
+
 
