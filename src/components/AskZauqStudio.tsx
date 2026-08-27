@@ -134,19 +134,28 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
           </div>
         </div>
 
-        {/* Direct Catalog Explore Alternate Link */}
-        {onExploreCatalog && (
-          <div className="pt-4 border-t border-[#F2ECE4] flex items-center justify-center">
+        {/* Direct Catalog Explore Alternate & Story Links */}
+        <div className="pt-4 border-t border-[#F2ECE4] flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[#786E65]">
+          {onExploreCatalog ? (
             <button
               type="button"
               onClick={onExploreCatalog}
-              className="flex items-center gap-1.5 text-xs text-[#786E65] hover:text-[#111111] font-medium transition-colors"
+              className="flex items-center gap-1.5 hover:text-[#111111] font-medium transition-colors"
             >
               <Compass className="w-3.5 h-3.5" />
               <span>Or browse the full catalogue in Explore</span>
             </button>
-          </div>
-        )}
+          ) : (
+            <span />
+          )}
+
+          <a
+            href="/story"
+            className="text-[11px] text-[#8C827A] hover:text-[#111111] underline decoration-[#E8E2D9] transition-colors"
+          >
+            The Meaning of Zauq &rarr;
+          </a>
+        </div>
       </motion.div>
     </div>
   );

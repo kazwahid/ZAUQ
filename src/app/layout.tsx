@@ -2,9 +2,9 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Zauq — AI-Guided Fashion Discovery Feed',
+  title: 'Zauq — Find what fits your intent',
   description:
-    'A login-free, single-session fashion discovery feed that narrows in real time through natural language refinements and tactile taste curation.',
+    'Tell Zauq the occasion, aesthetic, fabric, or budget. Get a curated edit—not a catalogue to scroll through.',
   keywords: [
     'fashion discovery',
     'AI stylist',

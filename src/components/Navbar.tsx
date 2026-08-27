@@ -79,13 +79,14 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Center: Brand & Main Navigation Tabs */}
         <div className="flex items-center gap-3 sm:gap-6 justify-center">
-          <button
-            onClick={() => onSelectTab('feed')}
+          <a
+            href="/story"
             className="font-serif text-lg sm:text-2xl tracking-[0.2em] uppercase text-[#111111] font-medium hidden lg:block mr-2 hover:opacity-80 transition-opacity"
-            aria-label="Zauq Home"
+            title="The Meaning of Zauq"
+            aria-label="The Meaning of Zauq"
           >
             ZAUQ
-          </button>
+          </a>
 
           {/* Primary View Switcher Tabs (Ask vs Explore) */}
           <nav className="flex items-center p-1 rounded-full bg-white/90 border border-[#E8E2D9] shadow-xs" aria-label="Main Navigation">

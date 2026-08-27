@@ -1,6 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
-  <!-- Transparent Background, High-Precision Elegant Calligraphic Emblem for ذوق -->
-  <g fill="#111111" stroke="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <style>
+    .bg { fill: #FAF8F5; stroke: #E8E2D9; stroke-width: 8; }
+    .mark { fill: #111111; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #181514; stroke: #2D2724; stroke-width: 8; }
+      .mark { fill: #F5EFE6; }
+    }
+  </style>
+
+  <!-- Protective Aesthetic Squircle Frame -->
+  <rect class="bg" x="12" y="12" width="488" height="488" rx="112" ry="112" />
+
+  <!-- High-Precision Calligraphic Emblem for ذوق (ZAUQ) -->
+  <g class="mark" stroke="none">
     <!-- Dhal (ذ) body and swash -->
     <path d="M125 155 C120 185 110 235 95 280 C80 325 65 348 90 350 C120 352 165 330 200 305 C210 298 215 310 205 318 C160 355 105 375 70 370 C40 365 55 320 75 270 C92 225 105 175 108 145 C110 135 128 142 125 155 Z"/>
     <!-- Dhal Nuqta (Diamond dot) -->
