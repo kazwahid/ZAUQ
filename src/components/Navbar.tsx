@@ -14,6 +14,7 @@ interface NavbarProps {
   activeFilterCount: number;
   activeFilterLabels?: string[];
   onRemoveFilter?: (id: string) => void;
+  isHeaderVisible?: boolean;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -24,21 +25,20 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenProfile,
   onResetSession,
   activeFilterCount,
+  isHeaderVisible = true,
 }) => {
-  const [isVisible, setIsVisible] = React.useState(true);
+  const [internalVisible, setInternalVisible] = React.useState(true);
   const lastScrollY = React.useRef(0);
 
   React.useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       if (currentScrollY < 40) {
-        setIsVisible(true);
+        setInternalVisible(true);
       } else if (currentScrollY > lastScrollY.current + 8) {
-        // Scrolling down -> hide on mobile
-        setIsVisible(false);
+        setInternalVisible(false);
       } else if (currentScrollY < lastScrollY.current - 8) {
-        // Scrolling up -> reveal
-        setIsVisible(true);
+        setInternalVisible(true);
       }
       lastScrollY.current = currentScrollY;
     };
@@ -47,10 +47,12 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const visible = isHeaderVisible && internalVisible;
+
   return (
     <header
-      className={`sticky top-0 z-40 w-full bg-[#FAF8F5]/90 backdrop-blur-xl border-b border-[#E8E2D9]/80 transition-transform duration-300 ease-in-out ${
-        isVisible ? 'translate-y-0' : '-translate-y-full'
+      className={`sticky top-0 z-40 w-full bg-[#FAF8F5]/90 backdrop-blur-xl border-b border-[#E8E2D9]/80 transition-all duration-300 ease-in-out ${
+        visible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between relative">
@@ -131,7 +133,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             aria-current={currentTab === 'feed' ? 'page' : undefined}
           >
             <Sparkles className="w-3.5 h-3.5" />
-            <span>{activeFilterCount > 0 ? 'Your Edit' : 'Ask'}</span>
+            <span className="truncate">{activeFilterCount > 0 ? 'Your Edit' : 'Ask'}</span>
           </button>
 
           <button

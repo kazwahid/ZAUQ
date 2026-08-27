@@ -49,8 +49,8 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
       <motion.div
         initial={{ opacity: 0, scale: 0.97, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-lg mx-auto bg-white/95 backdrop-blur-2xl rounded-3xl p-5 sm:p-7 border border-[#E8E2D9] shadow-2xl text-center"
+        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full max-w-xl mx-auto bg-white/95 backdrop-blur-2xl rounded-3xl p-5 sm:p-7 border border-[#E8E2D9] shadow-2xl text-center"
       >
         {/* Stylist Pill */}
         <div className="inline-flex items-center gap-1.5 px-3 py-0.8 rounded-full bg-[#111111] text-white text-[10.5px] font-semibold tracking-wider uppercase mb-3 shadow-xs">
@@ -66,16 +66,16 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
           Describe an occasion, aesthetic, fabric, color, or budget. Tell Zauq what you want. Get a focused edit around it.
         </p>
 
-        {/* Seamless Unified Spotlight Command Bar */}
+        {/* Seamless Unified Spotlight Command Bar - Zero Text Truncation */}
         <form onSubmit={handleSubmit} className="relative flex items-center mb-4">
           <input
             type="text"
             value={inputVal}
             onChange={(e) => setInputVal(e.target.value)}
-            placeholder="Something elegant for a summer wedding under $250..."
+            placeholder="Describe your look (e.g. summer wedding guest)..."
             disabled={isLoading}
             autoFocus
-            className="w-full pl-4 sm:pl-5 pr-28 sm:pr-32 py-3 sm:py-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E8E2D9] text-xs sm:text-sm text-[#111111] placeholder-[#8C827A] focus:outline-none focus:border-[#111111] focus:bg-white transition-all shadow-inner"
+            className="w-full pl-4 sm:pl-5 pr-20 sm:pr-28 py-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E8E2D9] text-xs sm:text-sm text-[#111111] placeholder-[#8C827A] focus:outline-none focus:border-[#111111] focus:bg-white transition-all shadow-inner"
           />
           <button
             type="submit"
@@ -90,7 +90,8 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
               </>
             ) : (
               <>
-                <span>Ask Zauq</span>
+                <span className="hidden sm:inline">Ask Zauq</span>
+                <span className="sm:hidden">Ask</span>
                 <ArrowRight className="w-3.5 h-3.5 text-white" />
               </>
             )}
