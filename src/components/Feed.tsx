@@ -2,10 +2,11 @@
 
 import React, { useRef, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronUp, ChevronDown, Sparkles, RotateCcw } from 'lucide-react';
+import { ChevronUp, ChevronDown, Sparkles } from 'lucide-react';
 import { RankedCatalogItem } from '@/types/catalog';
 import { Card } from './Card';
 import { EmptyState } from './EmptyState';
+import { AIHeroPrompt } from './AIHeroPrompt';
 import { triggerHaptic } from '@/lib/haptics';
 
 interface FeedProps {
@@ -20,6 +21,8 @@ interface FeedProps {
   onClearAllFilters: () => void;
   hasActiveFilters: boolean;
   onToast: (msg: string) => void;
+  onRefine?: (query: string) => Promise<void>;
+  isLoading?: boolean;
   onUndoLastAction?: () => void;
   hasHistoryToUndo?: boolean;
   onSelectDetail?: (item: RankedCatalogItem) => void;
@@ -37,6 +40,8 @@ export const Feed: React.FC<FeedProps> = ({
   onClearAllFilters,
   hasActiveFilters,
   onToast,
+  onRefine,
+  isLoading = false,
   onSelectDetail,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -126,6 +131,13 @@ export const Feed: React.FC<FeedProps> = ({
             ref={containerRef}
             className="w-full h-full overflow-y-scroll snap-y snap-mandatory no-scrollbar flex flex-col items-center"
           >
+            {/* Ambient AI Discovery Hero on initial cold start */}
+            {!hasActiveFilters && onRefine && (
+              <div className="w-full max-w-sm sm:max-w-[420px] snap-start shrink-0 flex items-center justify-center p-2.5 sm:p-3">
+                <AIHeroPrompt onRefine={onRefine} isLoading={isLoading} />
+              </div>
+            )}
+
             <AnimatePresence>
               {items.map((item) => (
                 <div

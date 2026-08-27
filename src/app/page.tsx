@@ -287,6 +287,8 @@ export default function Home() {
             onClearAllFilters={handleClearAllFilters}
             hasActiveFilters={activeFilters.length > 0}
             onToast={addToast}
+            onRefine={handleRefine}
+            isLoading={isLoading}
             onUndoLastAction={handleUndoLastAction}
             hasHistoryToUndo={actionHistory.length > 0}
             onSelectDetail={(item) => setSelectedDetailItem(item)}

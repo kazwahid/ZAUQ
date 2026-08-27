@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     apple: '/favicon.svg',
   },
   openGraph: {
-    title: 'Zauq (ذوق) — AI Fashion Discovery Feed',
+    title: 'Zauq — AI Fashion Discovery Feed',
     description:
       'Curate your personal aesthetic in seconds. Natural language narrowing without account barriers.',
     type: 'website',

@@ -218,15 +218,15 @@ export const BottomDock: React.FC<BottomDockProps> = ({
                 </div>
               )}
 
-              {/* AI Guided Prompt Suggestions */}
-              <div className="w-full flex items-center justify-center gap-1.5 py-0.5 flex-nowrap overflow-x-auto no-scrollbar">
-                {displayedSuggestions.map((sug) => (
+              {/* AI Guided Prompt Suggestions - No Scrollbar */}
+              <div className="w-full flex flex-wrap items-center justify-center gap-1.5 py-0.5 overflow-hidden">
+                {displayedSuggestions.slice(0, 3).map((sug) => (
                   <button
                     key={sug.label}
                     type="button"
                     onClick={() => handleSuggestionClick(sug)}
                     disabled={isLoading}
-                    className="shrink-0 px-3 sm:px-3.5 py-1 rounded-full text-[10px] sm:text-xs font-medium text-[#2C2724] bg-white/95 hover:bg-white border border-[#E8E2D9] shadow-xs hover:border-[#D3C9BE] transition-all active:scale-95 disabled:opacity-50 flex items-center gap-1"
+                    className="shrink-0 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-medium text-[#2C2724] bg-white/95 hover:bg-white border border-[#E8E2D9] shadow-xs hover:border-[#D3C9BE] transition-all active:scale-95 disabled:opacity-50 flex items-center gap-1"
                   >
                     <Sparkles className="w-2.5 h-2.5 text-[#786E65] shrink-0" />
                     <span>{sug.label}</span>
