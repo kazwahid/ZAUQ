@@ -66,32 +66,31 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
           Describe an occasion, aesthetic, fabric, color, or budget. Tell Zauq what you want. Get a focused edit around it.
         </p>
 
-        {/* Seamless Unified Spotlight Command Bar - Zero Text Truncation */}
+        {/* Seamless Unified Spotlight Command Bar - Complete Full Placeholder */}
         <form onSubmit={handleSubmit} className="relative flex items-center mb-4">
           <input
             type="text"
             value={inputVal}
             onChange={(e) => setInputVal(e.target.value)}
-            placeholder="Describe your look (e.g. summer wedding guest)..."
+            placeholder="Something elegant for a summer wedding under $250..."
             disabled={isLoading}
             autoFocus
-            className="w-full pl-4 sm:pl-5 pr-20 sm:pr-28 py-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E8E2D9] text-xs sm:text-sm text-[#111111] placeholder-[#8C827A] focus:outline-none focus:border-[#111111] focus:bg-white transition-all shadow-inner"
+            className="w-full pl-3.5 sm:pl-5 pr-14 sm:pr-28 py-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E8E2D9] text-[11px] sm:text-xs md:text-sm text-[#111111] placeholder-[#8C827A] focus:outline-none focus:border-[#111111] focus:bg-white transition-all shadow-inner"
           />
           <button
             type="submit"
             disabled={!inputVal.trim() || isLoading}
-            className="absolute right-1.5 flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-[#111111] text-white hover:bg-black disabled:opacity-40 transition-all active:scale-95 shadow-sm font-medium text-xs shrink-0"
+            className="absolute right-1.5 flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl bg-[#111111] text-white hover:bg-black disabled:opacity-40 transition-all active:scale-95 shadow-sm font-medium text-xs shrink-0"
             aria-label="Ask Zauq to find look"
           >
             {isLoading ? (
               <>
                 <Loader2 className="w-3.5 h-3.5 animate-spin text-white" />
-                <span>Curating</span>
+                <span className="hidden sm:inline">Curating</span>
               </>
             ) : (
               <>
                 <span className="hidden sm:inline">Ask Zauq</span>
-                <span className="sm:hidden">Ask</span>
                 <ArrowRight className="w-3.5 h-3.5 text-white" />
               </>
             )}

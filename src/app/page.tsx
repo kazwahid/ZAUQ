@@ -257,8 +257,6 @@ export default function Home() {
     addToast('Reset session to baseline.', 'info');
   };
 
-  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#111111] antialiased selection:bg-[#E8E2D9]">
       {/* Top Editorial Header & Main Navigation Tabs */}
@@ -272,7 +270,6 @@ export default function Home() {
         activeFilterCount={activeFilters.length}
         activeFilterLabels={activeFilterLabels}
         onRemoveFilter={handleRemoveFilter}
-        isHeaderVisible={isHeaderVisible}
       />
 
       {/* Main Content Area */}
@@ -296,7 +293,6 @@ export default function Home() {
             hasHistoryToUndo={actionHistory.length > 0}
             onSelectDetail={(item) => setSelectedDetailItem(item)}
             onSwitchToExplore={() => setCurrentTab('explore')}
-            onHeaderVisibilityChange={setIsHeaderVisible}
           />
         ) : (
           <ExploreView

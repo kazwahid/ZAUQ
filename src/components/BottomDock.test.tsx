@@ -29,7 +29,7 @@ describe('BottomDock Component (Search & Cascade)', () => {
       />
     );
 
-    expect(screen.getByText('Search style, fabric, vibe...')).toBeDefined();
+    expect(screen.getByText('Refine style, fabric, vibe...')).toBeDefined();
   });
 
   it('expands into the full prominent search form upon click', async () => {

@@ -27,7 +27,6 @@ interface FeedProps {
   hasHistoryToUndo?: boolean;
   onSelectDetail?: (item: RankedCatalogItem) => void;
   onSwitchToExplore?: () => void;
-  onHeaderVisibilityChange?: (visible: boolean) => void;
 }
 
 export const Feed: React.FC<FeedProps> = ({
@@ -46,10 +45,8 @@ export const Feed: React.FC<FeedProps> = ({
   isLoading = false,
   onSelectDetail,
   onSwitchToExplore,
-  onHeaderVisibilityChange,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const lastFeedScrollY = useRef<number>(0);
 
   // Desktop Keyboard navigation (ArrowDown / ArrowUp / J / K)
   useEffect(() => {
@@ -68,21 +65,6 @@ export const Feed: React.FC<FeedProps> = ({
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
-
-  const handleFeedScroll = () => {
-    if (!containerRef.current) return;
-    const currentY = containerRef.current.scrollTop;
-    if (currentY < 40) {
-      onHeaderVisibilityChange?.(true);
-    } else if (currentY > lastFeedScrollY.current + 12) {
-      // Scrolling down reel stream -> hide header for full-screen immersive feel
-      onHeaderVisibilityChange?.(false);
-    } else if (currentY < lastFeedScrollY.current - 12) {
-      // Scrolling up -> reveal header
-      onHeaderVisibilityChange?.(true);
-    }
-    lastFeedScrollY.current = currentY;
-  };
 
   const scrollNext = () => {
     if (containerRef.current) {
@@ -116,7 +98,7 @@ export const Feed: React.FC<FeedProps> = ({
   }
 
   return (
-    <section className="relative w-full h-[calc(100dvh-3.75rem)] flex flex-col items-center justify-start overflow-hidden">
+    <section className="relative w-full h-[calc(100dvh-5.5rem)] flex flex-col items-center justify-start overflow-hidden">
       {/* Screen Reader Live Region for filter changes */}
       <div className="sr-only" aria-live="polite">
         Feed curated by Ask Zauq. Showing {items.length} matched looks.
@@ -155,17 +137,16 @@ export const Feed: React.FC<FeedProps> = ({
         </div>
       ) : (
         <>
-          {/* Scrollable Reel Snap Container with Instagram-Style Dynamic Header Hide on Scroll Down */}
+          {/* Scrollable Reel Snap Container - Raised up for dedicated bottom dock room */}
           <div
             ref={containerRef}
-            onScroll={handleFeedScroll}
-            className="w-full flex-1 overflow-y-scroll snap-y snap-mandatory no-scrollbar flex flex-col items-center"
+            className="w-full flex-1 overflow-y-scroll snap-y snap-mandatory no-scrollbar flex flex-col items-center pt-1"
           >
             <AnimatePresence>
               {items.map((item) => (
                 <div
                   key={item.id}
-                  className="w-full max-w-sm sm:max-w-[420px] h-[calc(100dvh-6.5rem)] snap-start snap-always shrink-0 flex items-center justify-center p-2.5 sm:p-3 pb-20 sm:pb-24"
+                  className="w-full max-w-sm sm:max-w-[420px] h-[calc(100dvh-10.5rem)] snap-start snap-always shrink-0 flex items-center justify-center p-2 sm:p-2.5 pb-20 sm:pb-24"
                 >
                   <Card
                     item={item}

@@ -136,14 +136,14 @@ export const BottomDock: React.FC<BottomDockProps> = ({
                 triggerHaptic('light');
                 setIsExpanded(true);
               }}
-              className="flex items-center gap-2.5 px-4 py-2 sm:py-2.5 rounded-full bg-white/95 backdrop-blur-xl border border-[#E8E2D9] text-[#111111] shadow-md hover:shadow-lg hover:border-[#D3C9BE] transition-all active:scale-95 text-xs font-medium"
+              className="flex items-center gap-2.5 px-4 py-2 sm:py-2.5 rounded-full bg-white/80 dark:bg-black/60 backdrop-blur-2xl border border-white/60 dark:border-white/20 text-[#111111] shadow-xl hover:shadow-2xl transition-all active:scale-95 text-xs font-medium"
               aria-label="Open search and refinement bar"
             >
               <Search className="w-3.5 h-3.5 text-[#786E65]" />
               <span className="max-w-[200px] sm:max-w-[260px] truncate text-[#57504B]">
                 {activeFilters.length > 0
                   ? activeFilters.map((f) => f.label).join(' • ')
-                  : 'Search style, fabric, vibe...'}
+                  : 'Refine style, fabric, vibe...'}
               </span>
               {activeFilters.length > 0 && (
                 <span className="px-1.5 py-0.5 rounded-full bg-[#111111] text-white text-[10px] font-semibold">

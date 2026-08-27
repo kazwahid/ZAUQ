@@ -14,7 +14,6 @@ interface NavbarProps {
   activeFilterCount: number;
   activeFilterLabels?: string[];
   onRemoveFilter?: (id: string) => void;
-  isHeaderVisible?: boolean;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -25,36 +24,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenProfile,
   onResetSession,
   activeFilterCount,
-  isHeaderVisible = true,
 }) => {
-  const [internalVisible, setInternalVisible] = React.useState(true);
-  const lastScrollY = React.useRef(0);
-
-  React.useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY < 40) {
-        setInternalVisible(true);
-      } else if (currentScrollY > lastScrollY.current + 8) {
-        setInternalVisible(false);
-      } else if (currentScrollY < lastScrollY.current - 8) {
-        setInternalVisible(true);
-      }
-      lastScrollY.current = currentScrollY;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const visible = isHeaderVisible && internalVisible;
-
   return (
-    <header
-      className={`sticky top-0 z-40 w-full bg-[#FAF8F5]/90 backdrop-blur-xl border-b border-[#E8E2D9]/80 transition-all duration-300 ease-in-out ${
-        visible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
-      }`}
-    >
+    <header className="sticky top-0 z-40 w-full bg-[#FAF8F5]/90 backdrop-blur-xl border-b border-[#E8E2D9]/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between relative">
         {/* Left: My Style Profile Button & Reset */}
         <div className="flex items-center gap-1.5 shrink-0 z-10">
