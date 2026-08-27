@@ -6,7 +6,7 @@ import { InterpretResponseSchema, TaxonomyField } from '@/types/catalog';
 // In-memory rate limiter for serverless abuse protection
 const ipRateMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
-const MAX_REQUESTS_PER_WINDOW = 30; // 30 requests per min per IP
+const MAX_REQUESTS_PER_WINDOW = 45; // 45 requests per min per IP
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();
@@ -25,10 +25,10 @@ function checkRateLimit(ip: string): boolean {
   return true;
 }
 
-// High-precision fashion taxonomy synonym & concept dictionary
-function fallbackHeuristicParse(text: string, existingLabels: string[]) {
+// Ultra-robust fashion taxonomy synonym & concept interpreter
+function fallbackHeuristicParse(text: string, existingLabels: string[] = []) {
   const normalized = text.toLowerCase().trim();
-  const tokens = normalized.split(/[\s,+/]+/).filter(Boolean);
+  const tokens = normalized.split(/[\s,+/&]+/).filter(Boolean);
 
   const tags: Record<TaxonomyField, string[]> = {
     occasion: [],
@@ -42,11 +42,11 @@ function fallbackHeuristicParse(text: string, existingLabels: string[]) {
     shopFor: [],
   };
 
-  // Check matching tokens against allowed taxonomy directly
+  // Direct taxonomy token match
   for (const [field, allowedList] of Object.entries(ALLOWED_TAXONOMY)) {
     for (const val of allowedList) {
       const valLower = val.toLowerCase();
-      if (normalized.includes(valLower) || tokens.some(t => t === valLower)) {
+      if (normalized.includes(valLower) || tokens.some((t) => t === valLower)) {
         if (!tags[field as TaxonomyField].includes(val)) {
           tags[field as TaxonomyField].push(val);
         }
@@ -54,96 +54,172 @@ function fallbackHeuristicParse(text: string, existingLabels: string[]) {
     }
   }
 
-  // Deep fashion domain synonym mapping
-  if (normalized.includes('wedding') || normalized.includes('shaadi') || normalized.includes('reception')) {
+  // 1. Occasion & Event mappings
+  if (normalized.includes('wedding') || normalized.includes('shaadi') || normalized.includes('reception') || normalized.includes('nikkah') || normalized.includes('mehndi') || normalized.includes('barat')) {
     tags.occasion.push('wedding-guest');
+    tags.priceTier.push('premium');
   }
-  if (normalized.includes('cocktail') || normalized.includes('party') || normalized.includes('club') || normalized.includes('evening')) {
+  if (normalized.includes('cocktail') || normalized.includes('party') || normalized.includes('club') || normalized.includes('night out') || normalized.includes('soiree')) {
     tags.occasion.push('cocktail', 'party');
   }
-  if (normalized.includes('date') || normalized.includes('romantic')) {
+  if (normalized.includes('date') || normalized.includes('romantic') || normalized.includes('anniversary')) {
     tags.occasion.push('date-night');
   }
-  if (normalized.includes('gala') || normalized.includes('black tie') || normalized.includes('red carpet')) {
+  if (normalized.includes('gala') || normalized.includes('black tie') || normalized.includes('red carpet') || normalized.includes('prom') || normalized.includes('ball')) {
     tags.occasion.push('gala', 'formal');
     tags.priceTier.push('luxury');
   }
-  if (normalized.includes('office') || normalized.includes('work') || normalized.includes('corporate') || normalized.includes('meeting')) {
+  if (normalized.includes('office') || normalized.includes('work') || normalized.includes('corporate') || normalized.includes('meeting') || normalized.includes('business')) {
     tags.occasion.push('work');
     tags.setting.push('office');
     tags.silhouette.push('tailored', 'structured');
   }
-  if (normalized.includes('beach') || normalized.includes('vacation') || normalized.includes('resort') || normalized.includes('sea') || normalized.includes('island')) {
+  if (normalized.includes('beach') || normalized.includes('vacation') || normalized.includes('resort') || normalized.includes('holiday') || normalized.includes('island') || normalized.includes('coastal')) {
     tags.setting.push('beach', 'resort');
     tags.occasion.push('vacation');
     tags.season.push('summer');
   }
-  if (normalized.includes('rooftop') || normalized.includes('lounge') || normalized.includes('bar')) {
+  if (normalized.includes('rooftop') || normalized.includes('lounge') || normalized.includes('bar') || normalized.includes('terrace')) {
     tags.setting.push('rooftop');
     tags.occasion.push('cocktail');
   }
-  if (normalized.includes('brunch') || normalized.includes('sunday') || normalized.includes('cafe') || normalized.includes('coffee')) {
+  if (normalized.includes('brunch') || normalized.includes('sunday') || normalized.includes('cafe') || normalized.includes('coffee') || normalized.includes('lunch')) {
     tags.occasion.push('brunch', 'casual');
     tags.setting.push('cafe');
   }
-
-  // Fabrics & textures
-  if (normalized.includes('linen')) tags.pattern.push('linen-texture');
-  if (normalized.includes('silk') || normalized.includes('satin') || normalized.includes('glossy') || normalized.includes('lustrous')) {
-    tags.pattern.push('silk-sheen');
+  if (normalized.includes('festival') || normalized.includes('concert') || normalized.includes('coachella') || normalized.includes('rave')) {
+    tags.occasion.push('festival', 'party');
+    tags.palette.push('vibrant');
   }
-  if (normalized.includes('crochet') || normalized.includes('lace') || normalized.includes('net')) {
+  if (normalized.includes('lounge') || normalized.includes('chill') || normalized.includes('comfy') || normalized.includes('home') || normalized.includes('errands')) {
+    tags.occasion.push('lounge', 'casual');
+    tags.silhouette.push('relaxed');
+  }
+  if (normalized.includes('travel') || normalized.includes('airport') || normalized.includes('flight') || normalized.includes('road trip')) {
+    tags.occasion.push('travel', 'casual');
+    tags.silhouette.push('relaxed');
+  }
+
+  // 2. Fabrics, Weaves & Textures
+  if (normalized.includes('linen') || normalized.includes('flax')) {
+    tags.pattern.push('linen-texture');
+    tags.season.push('summer');
+  }
+  if (normalized.includes('silk') || normalized.includes('satin') || normalized.includes('glossy') || normalized.includes('lustrous') || normalized.includes('sheen')) {
+    tags.pattern.push('silk-sheen');
+    tags.priceTier.push('premium');
+  }
+  if (normalized.includes('crochet') || normalized.includes('macrame') || normalized.includes('lace') || normalized.includes('net') || normalized.includes('mesh')) {
     tags.pattern.push('crochet');
   }
-  if (normalized.includes('knit') || normalized.includes('ribbed') || normalized.includes('sweater') || normalized.includes('cardigan')) {
+  if (normalized.includes('knit') || normalized.includes('ribbed') || normalized.includes('sweater') || normalized.includes('cardigan') || normalized.includes('wool') || normalized.includes('cashmere')) {
     tags.pattern.push('knit', 'ribbed');
+    tags.season.push('fall', 'winter');
+  }
+  if (normalized.includes('striped') || normalized.includes('stripe') || normalized.includes('pinstripe')) {
+    tags.pattern.push('striped');
+  }
+  if (normalized.includes('floral') || normalized.includes('flower') || normalized.includes('botanical') || normalized.includes('bloom')) {
+    tags.pattern.push('floral');
+    tags.season.push('spring', 'summer');
+  }
+  if (normalized.includes('plaid') || normalized.includes('check') || normalized.includes('tartan') || normalized.includes('houndstooth')) {
+    tags.pattern.push('plaid');
+  }
+  if (normalized.includes('solid') || normalized.includes('plain') || normalized.includes('clean') || normalized.includes('unprinted')) {
+    tags.pattern.push('solid');
   }
 
-  // Silhouettes & cuts
-  if (normalized.includes('oversized') || normalized.includes('baggy') || normalized.includes('loose')) {
+  // 3. Colors & Palette
+  if (normalized.includes('black') || normalized.includes('noir') || normalized.includes('obsidian') || normalized.includes('dark') || normalized.includes('charcoal')) {
+    tags.palette.push('black', 'monochrome');
+  }
+  if (normalized.includes('white') || normalized.includes('cream') || normalized.includes('ivory') || normalized.includes('eggshell') || normalized.includes('pearl')) {
+    tags.palette.push('white', 'cream', 'neutral');
+  }
+  if (normalized.includes('olive') || normalized.includes('sage') || normalized.includes('khaki') || normalized.includes('moss') || normalized.includes('green')) {
+    tags.palette.push('olive', 'earthy');
+  }
+  if (normalized.includes('terracotta') || normalized.includes('rust') || normalized.includes('clay') || normalized.includes('bronze') || normalized.includes('cinnamon')) {
+    tags.palette.push('terracotta', 'earthy');
+  }
+  if (normalized.includes('navy') || normalized.includes('midnight') || normalized.includes('indigo') || normalized.includes('cobalt') || normalized.includes('blue')) {
+    tags.palette.push('navy');
+  }
+  if (normalized.includes('earthy') || normalized.includes('neutral') || normalized.includes('beige') || normalized.includes('sand') || normalized.includes('taupe') || normalized.includes('tan') || normalized.includes('camel')) {
+    tags.palette.push('earthy', 'neutral');
+  }
+  if (normalized.includes('pastel') || normalized.includes('baby blue') || normalized.includes('lavender') || normalized.includes('mint') || normalized.includes('blush') || normalized.includes('lilac')) {
+    tags.palette.push('pastel');
+    tags.season.push('spring', 'summer');
+  }
+  if (normalized.includes('burgundy') || normalized.includes('maroon') || normalized.includes('wine') || normalized.includes('bordeaux') || normalized.includes('cherry')) {
+    tags.palette.push('burgundy', 'jewel-tone');
+  }
+  if (normalized.includes('vibrant') || normalized.includes('bright') || normalized.includes('neon') || normalized.includes('colorful') || normalized.includes('bold color')) {
+    tags.palette.push('vibrant');
+  }
+  if (normalized.includes('gold') || normalized.includes('metallic') || normalized.includes('shimmer') || normalized.includes('champagne')) {
+    tags.palette.push('gold', 'jewel-tone');
+  }
+
+  // 4. Silhouettes & Cuts
+  if (normalized.includes('oversized') || normalized.includes('baggy') || normalized.includes('loose') || normalized.includes('slouchy') || normalized.includes('boyfriend')) {
     tags.silhouette.push('oversized', 'relaxed');
   }
-  if (normalized.includes('tailored') || normalized.includes('sharp') || normalized.includes('blazer') || normalized.includes('suit')) {
+  if (normalized.includes('tailored') || normalized.includes('sharp') || normalized.includes('blazer') || normalized.includes('suit') || normalized.includes('structured')) {
     tags.silhouette.push('tailored', 'structured');
   }
-  if (normalized.includes('wide leg') || normalized.includes('wide-leg') || normalized.includes('palazzo') || normalized.includes('trousers')) {
+  if (normalized.includes('wide leg') || normalized.includes('wide-leg') || normalized.includes('palazzo') || normalized.includes('flared pants')) {
     tags.silhouette.push('wide-leg');
   }
-  if (normalized.includes('flowy') || normalized.includes('breezy') || normalized.includes('flared') || normalized.includes('maxi')) {
+  if (normalized.includes('flowy') || normalized.includes('breezy') || normalized.includes('flared') || normalized.includes('maxi') || normalized.includes('swaying')) {
     tags.silhouette.push('flowy');
   }
-  if (normalized.includes('bodycon') || normalized.includes('fitted') || normalized.includes('tight') || normalized.includes('slip')) {
+  if (normalized.includes('bodycon') || normalized.includes('fitted') || normalized.includes('tight') || normalized.includes('slip') || normalized.includes('figure')) {
     tags.silhouette.push('bodycon');
   }
+  if (normalized.includes('cropped') || normalized.includes('crop') || normalized.includes('short cut')) {
+    tags.silhouette.push('cropped');
+  }
+  if (normalized.includes('wrap') || normalized.includes('kimono') || normalized.includes('tie-waist')) {
+    tags.silhouette.push('wrap');
+  }
 
-  // Aesthetics & vibes
-  if (normalized.includes('old money') || normalized.includes('quiet luxury') || normalized.includes('clean aesthetic')) {
+  // 5. Aesthetics & Vibes
+  if (normalized.includes('old money') || normalized.includes('quiet luxury') || normalized.includes('stealth wealth') || normalized.includes('classic') || normalized.includes('timeless') || normalized.includes('clean aesthetic')) {
     tags.silhouette.push('minimalist', 'tailored');
     tags.palette.push('neutral', 'cream', 'earthy');
+    tags.priceTier.push('premium');
   }
-  if (normalized.includes('streetwear') || normalized.includes('street') || normalized.includes('urban') || normalized.includes('edgy')) {
+  if (normalized.includes('streetwear') || normalized.includes('street') || normalized.includes('urban') || normalized.includes('edgy') || normalized.includes('grunge')) {
     tags.silhouette.push('oversized');
     tags.palette.push('monochrome', 'black');
     tags.occasion.push('casual');
   }
-  if (normalized.includes('minimalist') || normalized.includes('minimal')) {
+  if (normalized.includes('minimalist') || normalized.includes('minimal') || normalized.includes('clean') || normalized.includes('simple')) {
     tags.silhouette.push('minimalist');
+    tags.pattern.push('solid');
+  }
+  if (normalized.includes('boho') || normalized.includes('bohemian') || normalized.includes('artisan') || normalized.includes('indie')) {
+    tags.silhouette.push('flowy', 'relaxed');
+    tags.pattern.push('crochet', 'floral');
   }
 
-  // Categories
-  if (normalized.includes('dress') || normalized.includes('gown') || normalized.includes('frock') || normalized.includes('sundress')) {
+  // 6. Categories
+  if (normalized.includes('dress') || normalized.includes('gown') || normalized.includes('frock') || normalized.includes('sundress') || normalized.includes('kaftan')) {
     tags.category.push('dress');
   }
-  if (normalized.includes('top') || normalized.includes('shirt') || normalized.includes('blouse') || normalized.includes('tee')) {
+  if (normalized.includes('top') || normalized.includes('shirt') || normalized.includes('blouse') || normalized.includes('tee') || normalized.includes('camisole') || normalized.includes('corset')) {
     tags.category.push('top');
   }
-  if (normalized.includes('outerwear') || normalized.includes('jacket') || normalized.includes('coat') || normalized.includes('blazer')) {
+  if (normalized.includes('outerwear') || normalized.includes('jacket') || normalized.includes('coat') || normalized.includes('blazer') || normalized.includes('trench') || normalized.includes('bomber')) {
     tags.category.push('outerwear');
   }
-  if (normalized.includes('set') || normalized.includes('co-ord') || normalized.includes('suit') || normalized.includes('two piece')) {
+  if (normalized.includes('set') || normalized.includes('co-ord') || normalized.includes('suit') || normalized.includes('two piece') || normalized.includes('matching')) {
     tags.category.push('set');
   }
-  if (normalized.includes('pants') || normalized.includes('bottom') || normalized.includes('trouser') || normalized.includes('skirt')) {
+  if (normalized.includes('pants') || normalized.includes('bottom') || normalized.includes('trouser') || normalized.includes('skirt') || normalized.includes('shorts') || normalized.includes('jeans')) {
     tags.category.push('bottom');
   }
 
@@ -152,12 +228,14 @@ function fallbackHeuristicParse(text: string, existingLabels: string[]) {
     tags[field] = Array.from(new Set(tags[field]));
   }
 
-  // Clean title label
-  const words = text.trim().split(/\s+/);
-  const label = words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+  // Generate crisp editorial chip label
+  const words = text.trim().split(/\s+/).slice(0, 4);
+  const label = words
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(' ');
 
   return {
-    label: label.slice(0, 35),
+    label: label.slice(0, 32),
     tags,
   };
 }
@@ -187,8 +265,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Cap length to 120 chars to prevent token abuse
-    const cleanQuery = freeText.trim().slice(0, 120);
+    const cleanQuery = freeText.trim().slice(0, 140);
     if (!cleanQuery) {
       return NextResponse.json(
         { error: 'Refinement query cannot be empty' },
@@ -201,17 +278,16 @@ export async function POST(req: NextRequest) {
     const modelName = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
 
     if (!apiKey) {
-      console.warn('GEMINI_API_KEY not found in environment. Using fallback taxonomy parser.');
       const fallbackResult = fallbackHeuristicParse(cleanQuery, existingFilterLabels);
       return NextResponse.json({
         success: true,
         data: fallbackResult,
         isFallback: true,
-        notice: 'Using deterministic heuristic engine (Set GEMINI_API_KEY for full AI parsing).',
+        notice: 'Using deterministic taxonomy heuristic engine.',
       });
     }
 
-    // 4. Construct Gemini prompt with strict JSON output contract
+    // 4. Construct Gemini prompt with strict JSON contract & few-shot grounding
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({
       model: modelName,
@@ -222,31 +298,32 @@ export async function POST(req: NextRequest) {
     });
 
     const prompt = `
-You are the fashion taxonomy parser for Zauq (ذوق) — an AI fashion discovery feed.
-Your ONLY job is to interpret the user's natural language refinement text and map it into structured tags from our fixed vocabulary.
+You are the expert fashion taxonomy interpreter for Zauq (ذوق) — an AI visual fashion discovery feed.
+Your ONLY job is to map natural language refinement phrases into structured tags from our fixed fashion ontology.
 
-ALLOWED TAXONOMY:
+ALLOWED TAXONOMY DICTIONARY:
 ${JSON.stringify(ALLOWED_TAXONOMY, null, 2)}
 
-EXISTING ACTIVE FILTERS:
+ACTIVE PREVIOUS FILTERS:
 ${JSON.stringify(existingFilterLabels)}
 
-USER REFINEMENT: "${cleanQuery}"
+USER REFINEMENT INPUT: "${cleanQuery}"
 
-STRICT RULES:
-1. ONLY pick values that exist in the ALLOWED TAXONOMY for each field. DO NOT invent new words.
-2. If a field has no match, return an empty array [].
-3. Generate a clean, concise display label for the breadcrumb chip (e.g. "Beach Vacation", "Linen Silk", "Oversized Tailored").
-4. Return ONLY valid JSON matching this schema:
+GROUNDING RULES:
+1. Extract attributes for: occasion, setting, palette, pattern, silhouette, season, category, priceTier, shopFor.
+2. ONLY select values that explicitly exist in the ALLOWED TAXONOMY. Never invent new tags.
+3. If a dimension is not implied or matched, return an empty array [].
+4. Create a concise, elegant 2-3 word chip title for "label" (e.g., "Silk Slip Dress", "Quiet Luxury Linen", "Wide-Leg Office").
+5. Return strictly valid JSON:
 {
-  "label": "Short chip label (max 4 words)",
+  "label": "Short editorial title",
   "tags": {
-    "occasion": ["vacation"],
-    "setting": ["beach"],
+    "occasion": [],
+    "setting": [],
     "palette": [],
     "pattern": [],
     "silhouette": [],
-    "season": ["summer"],
+    "season": [],
     "category": [],
     "priceTier": [],
     "shopFor": []
@@ -254,9 +331,9 @@ STRICT RULES:
 }
 `;
 
-    // 5. Call Gemini with a 6-second AbortController timeout
+    // 5. Call Gemini with a 5.5-second timeout
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 6000);
+    const timeoutId = setTimeout(() => controller.abort(), 5500);
 
     let rawOutput = '';
     try {
@@ -265,25 +342,22 @@ STRICT RULES:
       rawOutput = response.response.text();
     } catch (apiError: any) {
       clearTimeout(timeoutId);
-      console.error('Gemini API call error or timeout:', apiError);
-      // Graceful fallback to heuristic
+      console.warn('Gemini API timeout or error. Using fallback heuristic engine:', apiError?.message);
       const fallbackResult = fallbackHeuristicParse(cleanQuery, existingFilterLabels);
       return NextResponse.json({
         success: true,
         data: fallbackResult,
         isFallback: true,
-        notice: 'Still working with what you told me (AI took too long).',
       });
     }
 
     // 6. Parse and validate JSON with Zod
     let parsedJson: any;
     try {
-      // Strip markdown code fences if present
       const cleanJson = rawOutput.replace(/```json/gi, '').replace(/```/g, '').trim();
       parsedJson = JSON.parse(cleanJson);
     } catch (parseError) {
-      console.error('Malformed JSON from Gemini:', rawOutput);
+      console.warn('Malformed JSON from LLM, executing fallback heuristic.');
       const fallbackResult = fallbackHeuristicParse(cleanQuery, existingFilterLabels);
       return NextResponse.json({
         success: true,
@@ -294,7 +368,7 @@ STRICT RULES:
 
     const validated = InterpretResponseSchema.safeParse(parsedJson);
     if (!validated.success) {
-      console.error('Zod schema validation failed on Gemini output:', validated.error);
+      console.warn('Zod schema validation mismatch on LLM output, executing fallback heuristic.');
       const fallbackResult = fallbackHeuristicParse(cleanQuery, existingFilterLabels);
       return NextResponse.json({
         success: true,
@@ -303,7 +377,7 @@ STRICT RULES:
       });
     }
 
-    // 7. Sanitize: enforce that all tags strictly exist in ALLOWED_TAXONOMY
+    // 7. Sanitize: enforce exact whitelist match against ALLOWED_TAXONOMY
     const sanitizedTags: Record<string, string[]> = {};
     for (const [field, allowedValues] of Object.entries(ALLOWED_TAXONOMY)) {
       const candidateList = (validated.data.tags as any)[field] || [];
