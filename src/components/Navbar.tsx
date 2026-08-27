@@ -77,19 +77,14 @@ export const Navbar: React.FC<NavbarProps> = ({
           )}
         </div>
 
-        {/* Center: Brand (ZAUQ • ذوق) & Main Instagram/TikTok Navigation Tabs */}
+        {/* Center: Brand & Main Navigation Tabs */}
         <div className="flex items-center gap-3 sm:gap-6 justify-center">
           <button
             onClick={() => onSelectTab('feed')}
-            className="hidden lg:flex items-center gap-2 mr-1 group"
+            className="font-serif text-lg sm:text-2xl tracking-[0.2em] uppercase text-[#111111] font-medium hidden lg:block mr-2 hover:opacity-80 transition-opacity"
             aria-label="Zauq Home"
           >
-            <span className="font-serif text-lg sm:text-2xl tracking-[0.2em] uppercase text-[#111111] font-medium group-hover:opacity-80 transition-opacity">
-              ZAUQ
-            </span>
-            <span className="font-urdu text-xl text-[#786E65] font-normal leading-none select-none">
-              ذوق
-            </span>
+            ZAUQ
           </button>
 
           {/* Primary View Switcher Tabs (For You vs Explore) */}

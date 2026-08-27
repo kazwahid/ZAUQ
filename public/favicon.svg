@@ -1,33 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
-  <defs>
-    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="85%" stop-color="#FAF8F5"/>
-      <stop offset="100%" stop-color="#EFEAE1"/>
-    </radialGradient>
-    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#141110" flood-opacity="0.12"/>
-    </filter>
-  </defs>
+  <!-- Transparent Background, High-Precision Elegant Calligraphic Emblem for ذوق -->
+  <g fill="#111111" stroke="none">
+    <!-- Dhal (ذ) body and swash -->
+    <path d="M125 155 C120 185 110 235 95 280 C80 325 65 348 90 350 C120 352 165 330 200 305 C210 298 215 310 205 318 C160 355 105 375 70 370 C40 365 55 320 75 270 C92 225 105 175 108 145 C110 135 128 142 125 155 Z"/>
+    <!-- Dhal Nuqta (Diamond dot) -->
+    <polygon points="120,95 138,113 120,131 102,113" />
 
-  <!-- Luxury Circular Canvas -->
-  <circle cx="256" cy="256" r="248" fill="url(#bgGrad)" stroke="#E0D8CC" stroke-width="6"/>
-  <circle cx="256" cy="256" r="236" fill="none" stroke="#D3C9BC" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+    <!-- Waw (و) head loop and sweeping tail -->
+    <path d="M220 250 C205 230 205 200 225 190 C245 180 270 195 270 225 C270 260 245 285 220 305 C195 325 180 355 175 390 C173 400 160 395 162 385 C170 345 190 310 218 285 C235 270 248 250 248 225 C248 208 236 200 226 205 C216 210 216 228 226 242 C230 248 225 255 220 250 Z"/>
 
-  <!-- Urdu Calligraphy for ZAUQ (ذوق) -->
-  <g filter="url(#softShadow)" fill="#1A1615">
-    <text 
-      x="50%" 
-      y="54%" 
-      dominant-baseline="central" 
-      text-anchor="middle" 
-      font-family="'Amiri', 'Lateef', 'Scheherazade New', 'Noto Naskh Arabic', 'Traditional Arabic', serif" 
-      font-size="210" 
-      font-weight="700"
-      letter-spacing="2"
-      direction="rtl"
-    >
-      ذوق
-    </text>
+    <!-- Qaf (ق) loop head, dual diamond nuqtas, and deep fluid bowl -->
+    <path d="M340 230 C325 210 325 185 345 175 C365 165 390 180 390 210 C390 240 365 265 340 275 C305 290 275 315 260 350 C240 395 265 440 315 445 C370 450 425 410 455 355 C460 345 470 352 465 362 C430 425 365 470 300 465 C240 460 210 405 235 345 C255 300 295 270 335 255 C350 250 368 238 368 212 C368 195 356 188 346 193 C336 198 335 215 345 228 C350 234 345 240 340 230 Z"/>
+    
+    <!-- Qaf Dual Nuqtas (Calligraphic diamond pair) -->
+    <polygon points="345,105 363,123 345,141 327,123" />
+    <polygon points="385,95 403,113 385,131 367,113" />
+
+    <!-- Subtle Artistic Tashkeel Accent Swash (Harakat) -->
+    <path d="M280 145 C295 135 310 135 320 140 C325 142 320 150 315 148 C305 145 295 145 285 152 C280 155 275 150 280 145 Z"/>
   </g>
 </svg>

@@ -104,7 +104,7 @@ export const BottomDock: React.FC<BottomDockProps> = ({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.96 }}
               transition={{ duration: 0.25 }}
-              className="flex flex-col gap-1.5 w-full bg-[#111111]/95 backdrop-blur-xl text-white p-2.5 rounded-3xl border border-white/10 shadow-xl"
+              className="flex flex-col gap-1.5 w-full bg-[#111111]/95 backdrop-blur-xl text-white p-2.5 rounded-3xl border border-white/10 shadow-md"
             >
               {/* Specificity Meter Indicator */}
               <div className="flex items-center justify-between px-2 text-[11px]">
@@ -180,7 +180,7 @@ export const BottomDock: React.FC<BottomDockProps> = ({
                   type="button"
                   onClick={() => handleSuggestionClick(sug)}
                   disabled={isLoading}
-                  className="shrink px-3 sm:px-3.5 py-1 rounded-full text-[10px] sm:text-xs font-medium text-[#2C2724] bg-white/95 hover:bg-white border border-[#E8E2D9] shadow-xs hover:border-[#111111]/40 transition-all active:scale-95 disabled:opacity-50 flex items-center gap-1 truncate"
+                  className="shrink px-3 sm:px-3.5 py-1 rounded-full text-[10px] sm:text-xs font-medium text-[#2C2724] bg-white/95 hover:bg-white border border-[#E8E2D9] shadow-xs hover:border-[#D3C9BE] transition-all active:scale-95 disabled:opacity-50 flex items-center gap-1 truncate"
                 >
                   {inputVal ? (
                     <Sparkles className="w-2.5 h-2.5 text-[#786E65] shrink-0" />
@@ -197,11 +197,9 @@ export const BottomDock: React.FC<BottomDockProps> = ({
           onSubmit={handleSubmit}
           layout
           onClick={() => setIsCollapsed(false)}
-          className={`w-full relative flex items-center p-1.5 sm:p-2 rounded-full bg-white/95 backdrop-blur-2xl border transition-all duration-300 shadow-lg outline-none focus-within:outline-none focus-within:ring-0 ${
-            isFocused
-              ? 'border-[#D3C9BE] bg-white shadow-xl'
-              : 'border-[#E8E2D9] hover:border-[#D3C9BE]'
-          } ${isCollapsed ? 'max-w-xs sm:max-w-xl opacity-90 hover:opacity-100' : ''}`}
+          className={`w-full relative flex items-center p-1.5 sm:p-2 rounded-full bg-white/95 backdrop-blur-2xl border border-[#E8E2D9] transition-all duration-300 shadow-sm outline-none focus-within:outline-none focus-within:ring-0 focus-within:border-[#D3C9BE] ${
+            isCollapsed ? 'max-w-xs sm:max-w-xl opacity-90 hover:opacity-100' : ''
+          }`}
         >
           <div className="pl-3 sm:pl-3.5 pr-2 text-[#786E65] flex items-center justify-center shrink-0">
             {isLoading ? (
