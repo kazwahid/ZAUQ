@@ -163,8 +163,10 @@ npm run build
 ## 9. Capstone Reflection
 
 * **What was hardest? Why?**
-  Balancing an Instagram-style fluid 1-look-at-a-time snap-scroll reel with clean, non-intrusive AI refinement. Designing an interface that feels quiet, cinematic, and luxury while maintaining strict WCAG AA accessibility, zero scrollbar pollution, and responsive viewport sizing across mobile and laptop screens was a demanding exercise in layout engineering.
+  The hardest part was the ideation phase: figuring out what real problem to solve and finding the authentic "WHY." I had existing projects I could have easily submitted, but I deliberately wanted to put myself through the entire end-to-end process from scratch. Narrowing down the problem from "what can AI do?" to "what friction does an actual person experience when trying to dress for an occasion?" took the most deliberation, but it gave the entire project its purpose.
+
 * **What would you do differently next time?**
-  Design the deterministic fallback engine *before* writing the LLM prompt. Establishing the structured taxonomy and heuristic parser first made the AI prompt simpler and eliminated prompt hallucinations.
-* **One thing learned that surprised me:**
-  Users do not want an AI conversational chatbot to shop for clothes—they want a fast, opinionated, structured curation engine that transparently explains *why* each piece fits their aesthetic brief.
+  I would seek continuous user feedback much earlier at every stage—from validating the initial concept to testing the feel of the reels swipe interactions. Technically, I would design the deterministic fashion taxonomy schema and the heuristic fallback dictionary *before* touching the LLM prompt. Having the data structures locked down first makes the AI integration far more reliable and predictable.
+
+* **One thing I learned that surprised me:**
+  When you have absolute clarity on *what* you are building and *why*, execution happens remarkably fast. In an era where AI can handle boilerplate and acceleration, technical constraints are no longer the bottleneck—creativity, taste, and clear intent are infinite.
