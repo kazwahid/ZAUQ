@@ -60,7 +60,7 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
 
         {/* Hero Title & Subtitle */}
         <h1 className="font-serif text-3xl sm:text-4xl text-[#111111] font-medium tracking-tight leading-tight mb-2">
-          Describe what you&apos;re looking for
+          What are you in the mood to wear?
         </h1>
         <p className="text-xs sm:text-sm text-[#786E65] leading-relaxed max-w-md mx-auto mb-6">
           Describe an occasion, aesthetic, fabric, color, or budget. Tell Zauq what you want. Get a focused edit around it.

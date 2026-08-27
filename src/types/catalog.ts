@@ -147,6 +147,8 @@ export interface UserProfile {
   ageRange?: string | null;
   undertone?: string | null;
   aestheticPreference?: string | null;
+  preferredPalettes?: string[];
+  preferredFabrics?: string[];
 }
 
 export interface SessionState {

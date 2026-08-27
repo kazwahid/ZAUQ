@@ -47,6 +47,25 @@ export const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
   const palettes = ['Neutrals', 'Noir / Black', 'Cream & White', 'Earth Tones', 'Vibrant'];
   const fabrics = ['Linen', 'Mulberry Silk', 'Tencel & Cotton', 'Knit & Wool'];
 
+  const selectedPalettes = profile.preferredPalettes || ['Neutrals', 'Noir / Black'];
+  const selectedFabrics = profile.preferredFabrics || ['Linen', 'Mulberry Silk'];
+
+  const togglePalette = (pal: string) => {
+    triggerHaptic('light');
+    const updated = selectedPalettes.includes(pal)
+      ? selectedPalettes.filter((p) => p !== pal)
+      : [...selectedPalettes, pal];
+    onUpdateProfile({ ...profile, preferredPalettes: updated });
+  };
+
+  const toggleFabric = (fab: string) => {
+    triggerHaptic('light');
+    const updated = selectedFabrics.includes(fab)
+      ? selectedFabrics.filter((f) => f !== fab)
+      : [...selectedFabrics, fab];
+    onUpdateProfile({ ...profile, preferredFabrics: updated });
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -113,12 +132,22 @@ export const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                   <span className="px-2.5 py-1 rounded-full bg-[#FAF8F5] border border-[#E8E2D9] text-[11px] font-medium text-[#111111]">
                     {profile.shopFor === 'all' ? 'All Pieces' : profile.shopFor}
                   </span>
-                  <span className="px-2.5 py-1 rounded-full bg-[#FAF8F5] border border-[#E8E2D9] text-[11px] font-medium text-[#111111]">
-                    Tailored Silhouettes
-                  </span>
-                  <span className="px-2.5 py-1 rounded-full bg-[#FAF8F5] border border-[#E8E2D9] text-[11px] font-medium text-[#111111]">
-                    Natural Weaves
-                  </span>
+                  {selectedPalettes.slice(0, 2).map((p) => (
+                    <span
+                      key={p}
+                      className="px-2.5 py-1 rounded-full bg-[#FAF8F5] border border-[#E8E2D9] text-[11px] font-medium text-[#111111]"
+                    >
+                      {p}
+                    </span>
+                  ))}
+                  {selectedFabrics.slice(0, 2).map((f) => (
+                    <span
+                      key={f}
+                      className="px-2.5 py-1 rounded-full bg-[#FAF8F5] border border-[#E8E2D9] text-[11px] font-medium text-[#111111]"
+                    >
+                      {f}
+                    </span>
+                  ))}
                 </div>
               </div>
 
@@ -185,37 +214,57 @@ export const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                 </div>
               </div>
 
-              {/* Palettes */}
+              {/* Gravitates Toward (Palettes) - Fully Selectable Toggle Buttons */}
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-[#111111] mb-2">
                   Gravitates Toward (Palettes)
                 </label>
                 <div className="flex flex-wrap gap-1.5">
-                  {palettes.map((pal) => (
-                    <span
-                      key={pal}
-                      className="px-3 py-1.5 rounded-full bg-white border border-[#E8E2D9] text-[11px] text-[#57504B] font-medium"
-                    >
-                      {pal}
-                    </span>
-                  ))}
+                  {palettes.map((pal) => {
+                    const isSelected = selectedPalettes.includes(pal);
+                    return (
+                      <button
+                        key={pal}
+                        type="button"
+                        onClick={() => togglePalette(pal)}
+                        className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] font-medium border transition-all active:scale-95 ${
+                          isSelected
+                            ? 'bg-[#111111] text-white border-[#111111] shadow-2xs'
+                            : 'bg-white text-[#57504B] hover:bg-[#FAF8F5] border-[#E8E2D9]'
+                        }`}
+                      >
+                        <span>{pal}</span>
+                        {isSelected && <Check className="w-3 h-3 text-white" />}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Fabrics */}
+              {/* Preferred Fabrics - Fully Selectable Toggle Buttons */}
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-[#111111] mb-2">
                   Preferred Fabrics
                 </label>
                 <div className="flex flex-wrap gap-1.5">
-                  {fabrics.map((fab) => (
-                    <span
-                      key={fab}
-                      className="px-3 py-1.5 rounded-full bg-white border border-[#E8E2D9] text-[11px] text-[#57504B] font-medium"
-                    >
-                      {fab}
-                    </span>
-                  ))}
+                  {fabrics.map((fab) => {
+                    const isSelected = selectedFabrics.includes(fab);
+                    return (
+                      <button
+                        key={fab}
+                        type="button"
+                        onClick={() => toggleFabric(fab)}
+                        className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] font-medium border transition-all active:scale-95 ${
+                          isSelected
+                            ? 'bg-[#111111] text-white border-[#111111] shadow-2xs'
+                            : 'bg-white text-[#57504B] hover:bg-[#FAF8F5] border-[#E8E2D9]'
+                        }`}
+                      >
+                        <span>{fab}</span>
+                        {isSelected && <Check className="w-3 h-3 text-white" />}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
