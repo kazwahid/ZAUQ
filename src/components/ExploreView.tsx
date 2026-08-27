@@ -113,21 +113,35 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
   }, [items, selectedCategory, searchQuery]);
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-3 pb-36">
-      {/* Minimal Editorial Header */}
-      <div className="flex items-center justify-between gap-4 mb-5 pb-3 border-b border-[#E8E2D9]">
-        <h1 className="font-serif text-2xl sm:text-3xl text-[#111111] font-medium tracking-tight">
-          Explore
-        </h1>
+    <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-2 pb-36">
+      {/* Category Pills & Integrated Search Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-3 border-b border-[#E8E2D9]">
+        {/* Category Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+          {CATEGORY_TABS.map((tab) => (
+            <button
+              key={tab.value}
+              type="button"
+              onClick={() => setSelectedCategory(tab.value)}
+              className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
+                selectedCategory === tab.value
+                  ? 'bg-[#111111] text-white shadow-xs'
+                  : 'bg-white text-[#57504B] border border-[#E8E2D9] hover:border-[#D3C9BE] hover:text-[#111111]'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
-        {/* Quick Filter Search in Explore */}
-        <div className="relative w-48 sm:w-64">
+        {/* Search Bar Placed on the side */}
+        <div className="relative w-full sm:w-56 shrink-0">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#786E65]" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search catalog..."
+            placeholder="Search dresses, tops..."
             className="w-full pl-8 pr-3 py-1.5 rounded-full bg-white border border-[#E8E2D9] text-xs text-[#111111] placeholder-[#8C827A] focus:outline-none focus:border-[#D3C9BE] shadow-xs"
           />
         </div>
@@ -184,24 +198,6 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
             </motion.div>
           ))}
         </div>
-      </div>
-
-      {/* Category Pills Switcher */}
-      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-3 mb-5">
-        {CATEGORY_TABS.map((tab) => (
-          <button
-            key={tab.value}
-            type="button"
-            onClick={() => setSelectedCategory(tab.value)}
-            className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
-              selectedCategory === tab.value
-                ? 'bg-[#111111] text-white shadow-xs'
-                : 'bg-white text-[#57504B] border border-[#E8E2D9] hover:border-[#111111]/30 hover:text-[#111111]'
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
       </div>
 
       {/* Instagram Explore Staggered Photo Grid */}

@@ -20,6 +20,8 @@ interface FeedProps {
   onClearAllFilters: () => void;
   hasActiveFilters: boolean;
   onToast: (msg: string) => void;
+  onUndoLastAction?: () => void;
+  hasHistoryToUndo?: boolean;
   onSelectDetail?: (item: RankedCatalogItem) => void;
 }
 
@@ -98,7 +100,7 @@ export const Feed: React.FC<FeedProps> = ({
               {items.map((item, idx) => (
                 <div
                   key={item.id}
-                  className="w-full max-w-sm sm:max-w-[420px] h-[calc(100dvh-4.25rem)] snap-start snap-always shrink-0 flex items-center justify-center p-2.5 sm:p-3"
+                  className="w-full max-w-sm sm:max-w-[420px] h-[calc(100dvh-4.25rem)] snap-start snap-always shrink-0 flex items-center justify-center p-2.5 sm:p-3 pb-16 sm:pb-20"
                 >
                   <Card
                     item={item}
