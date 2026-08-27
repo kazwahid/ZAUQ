@@ -100,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               aria-current={currentTab === 'feed' ? 'page' : undefined}
             >
               <Sparkles className="w-3 h-3" />
-              <span>For You</span>
+              <span>{activeFilterCount > 0 ? 'Your Edit' : 'Ask Zauq'}</span>
             </button>
 
             <button

@@ -2,11 +2,11 @@
 
 import React, { useRef, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronUp, ChevronDown, Sparkles } from 'lucide-react';
+import { ChevronUp, ChevronDown, Sparkles, Plus } from 'lucide-react';
 import { RankedCatalogItem } from '@/types/catalog';
 import { Card } from './Card';
 import { EmptyState } from './EmptyState';
-import { AIHeroPrompt } from './AIHeroPrompt';
+import { AskZauqStudio } from './AskZauqStudio';
 import { triggerHaptic } from '@/lib/haptics';
 
 interface FeedProps {
@@ -26,6 +26,7 @@ interface FeedProps {
   onUndoLastAction?: () => void;
   hasHistoryToUndo?: boolean;
   onSelectDetail?: (item: RankedCatalogItem) => void;
+  onSwitchToExplore?: () => void;
 }
 
 export const Feed: React.FC<FeedProps> = ({
@@ -43,6 +44,7 @@ export const Feed: React.FC<FeedProps> = ({
   onRefine,
   isLoading = false,
   onSelectDetail,
+  onSwitchToExplore,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -84,34 +86,44 @@ export const Feed: React.FC<FeedProps> = ({
     }
   };
 
+  // If no AI brief has been entered yet, require the user to Ask Zauq first!
+  if (!hasActiveFilters && onRefine) {
+    return (
+      <AskZauqStudio
+        onRefine={onRefine}
+        isLoading={isLoading}
+        onExploreCatalog={onSwitchToExplore}
+      />
+    );
+  }
+
   return (
     <section className="relative w-full h-[calc(100dvh-3.75rem)] flex items-center justify-center overflow-hidden">
       {/* Screen Reader Live Region for filter changes */}
       <div className="sr-only" aria-live="polite">
-        {hasActiveFilters
-          ? `Feed refined with active filters. Showing ${items.length} matched looks.`
-          : 'Showing all fashion looks in discovery feed.'}
+        Feed curated by Ask Zauq. Showing {items.length} matched looks.
       </div>
 
-      {/* Floating Active Edit Header */}
-      {hasActiveFilters && items.length > 0 && (
+      {/* Floating Active Style Brief Header */}
+      {items.length > 0 && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="absolute top-2 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/90 backdrop-blur-md border border-[#E8E2D9] shadow-xs text-xs"
+          className="absolute top-2 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-xl border border-[#E8E2D9] shadow-md text-xs"
         >
-          <Sparkles className="w-3 h-3 text-[#111111]" />
-          <span className="font-medium text-[#111111]">Your Curated Edit</span>
-          <span className="text-[10px] text-[#786E65] font-mono">({items.length} looks)</span>
+          <Sparkles className="w-3.5 h-3.5 text-[#111111] animate-pulse" />
+          <span className="font-semibold text-[#111111]">Your Zauq Edit</span>
+          <span className="text-[10px] text-[#786E65] font-mono">({items.length} pieces curated)</span>
           <button
             type="button"
             onClick={() => {
               triggerHaptic('light');
               onClearAllFilters();
             }}
-            className="ml-1 pl-2 border-l border-[#E8E2D9] text-[10px] text-[#786E65] hover:text-[#111111] underline transition-colors"
+            className="ml-1 pl-2 border-l border-[#E8E2D9] flex items-center gap-1 text-[11px] font-medium text-[#111111] hover:text-black underline transition-colors"
           >
-            Reset
+            <Plus className="w-3 h-3" />
+            <span>New Brief</span>
           </button>
         </motion.div>
       )}
@@ -131,13 +143,6 @@ export const Feed: React.FC<FeedProps> = ({
             ref={containerRef}
             className="w-full h-full overflow-y-scroll snap-y snap-mandatory no-scrollbar flex flex-col items-center"
           >
-            {/* Ambient AI Discovery Hero on initial cold start */}
-            {!hasActiveFilters && onRefine && (
-              <div className="w-full max-w-sm sm:max-w-[420px] snap-start shrink-0 flex items-center justify-center p-2.5 sm:p-3">
-                <AIHeroPrompt onRefine={onRefine} isLoading={isLoading} />
-              </div>
-            )}
-
             <AnimatePresence>
               {items.map((item) => (
                 <div
@@ -154,7 +159,7 @@ export const Feed: React.FC<FeedProps> = ({
                     onToggleSave={onToggleSave}
                     onClickDetail={onSelectDetail}
                     onToast={onToast}
-                    showMatchScore={hasActiveFilters}
+                    showMatchScore={true}
                     isStreamMode={true}
                   />
                 </div>

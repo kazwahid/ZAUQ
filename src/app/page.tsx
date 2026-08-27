@@ -292,6 +292,7 @@ export default function Home() {
             onUndoLastAction={handleUndoLastAction}
             hasHistoryToUndo={actionHistory.length > 0}
             onSelectDetail={(item) => setSelectedDetailItem(item)}
+            onSwitchToExplore={() => setCurrentTab('explore')}
           />
         ) : (
           <ExploreView
