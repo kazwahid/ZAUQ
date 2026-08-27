@@ -69,7 +69,7 @@ export const Feed: React.FC<FeedProps> = ({
   const scrollNext = () => {
     if (containerRef.current) {
       containerRef.current.scrollBy({
-        top: containerRef.current.clientHeight * 0.9,
+        top: containerRef.current.clientHeight,
         behavior: 'smooth',
       });
       triggerHaptic('light');
@@ -79,7 +79,7 @@ export const Feed: React.FC<FeedProps> = ({
   const scrollPrev = () => {
     if (containerRef.current) {
       containerRef.current.scrollBy({
-        top: -containerRef.current.clientHeight * 0.9,
+        top: -containerRef.current.clientHeight,
         behavior: 'smooth',
       });
       triggerHaptic('light');
@@ -98,7 +98,7 @@ export const Feed: React.FC<FeedProps> = ({
   }
 
   return (
-    <section className="relative w-full h-[calc(100dvh-5.5rem)] flex flex-col items-center justify-start overflow-hidden">
+    <section className="relative w-full h-[calc(100dvh-4.75rem)] flex flex-col items-center justify-start overflow-hidden pb-14 sm:pb-16">
       {/* Screen Reader Live Region for filter changes */}
       <div className="sr-only" aria-live="polite">
         Feed curated by Ask Zauq. Showing {items.length} matched looks.
@@ -137,30 +137,32 @@ export const Feed: React.FC<FeedProps> = ({
         </div>
       ) : (
         <>
-          {/* Scrollable Reel Snap Container - Raised up for dedicated bottom dock room */}
+          {/* Scrollable Reel Snap Container - 1:1 Snap ratio with zero leakage of next look */}
           <div
             ref={containerRef}
-            className="w-full flex-1 overflow-y-scroll snap-y snap-mandatory no-scrollbar flex flex-col items-center pt-1"
+            className="w-full flex-1 overflow-y-scroll snap-y snap-mandatory no-scrollbar flex flex-col items-center"
           >
             <AnimatePresence>
               {items.map((item) => (
                 <div
                   key={item.id}
-                  className="w-full max-w-sm sm:max-w-[420px] h-[calc(100dvh-10.5rem)] snap-start snap-always shrink-0 flex items-center justify-center p-2 sm:p-2.5 pb-20 sm:pb-24"
+                  className="w-full h-full snap-start snap-always shrink-0 flex items-center justify-center p-2 sm:p-2.5"
                 >
-                  <Card
-                    item={item}
-                    isSaved={savedIds.includes(item.id)}
-                    isLiked={likedIds.includes(item.id)}
-                    isSkipped={skippedIds.includes(item.id)}
-                    onLike={onLike}
-                    onSkip={onSkip}
-                    onToggleSave={onToggleSave}
-                    onClickDetail={onSelectDetail}
-                    onToast={onToast}
-                    showMatchScore={true}
-                    isStreamMode={true}
-                  />
+                  <div className="w-full max-w-sm sm:max-w-[420px] h-full flex items-center justify-center">
+                    <Card
+                      item={item}
+                      isSaved={savedIds.includes(item.id)}
+                      isLiked={likedIds.includes(item.id)}
+                      isSkipped={skippedIds.includes(item.id)}
+                      onLike={onLike}
+                      onSkip={onSkip}
+                      onToggleSave={onToggleSave}
+                      onClickDetail={onSelectDetail}
+                      onToast={onToast}
+                      showMatchScore={true}
+                      isStreamMode={true}
+                    />
+                  </div>
                 </div>
               ))}
             </AnimatePresence>

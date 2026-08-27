@@ -17,6 +17,8 @@ const SUGGESTED_BRIEFS = [
   { label: 'Black Tie Gala', query: 'Black tie silk gown for a formal gala' },
   { label: 'Resort Wear', query: 'Breezy coastal resort wear in linen' },
   { label: 'Workwear', query: 'Tailored minimalist trousers and blazer for work' },
+  { label: 'Art Gallery Opening', query: 'Avant-garde tailoring for an art gallery opening', desktopOnly: true },
+  { label: 'Weekend Getaway', query: 'Relaxed earth-tone knitwear and cotton for a weekend getaway', desktopOnly: true },
 ];
 
 export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
@@ -112,7 +114,7 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
           )}
         </AnimatePresence>
 
-        {/* One-Click Suggested Briefs */}
+        {/* One-Click Suggested Briefs (Includes 2 extra for Laptop viewports) */}
         <div className="text-left mb-3.5">
           <span className="text-[9.5px] font-bold uppercase tracking-wider text-[#786E65] block mb-1.5 px-1">
             Suggested Briefs
@@ -124,7 +126,9 @@ export const AskZauqStudio: React.FC<AskZauqStudioProps> = ({
                 type="button"
                 onClick={() => handleBriefClick(brief.query)}
                 disabled={isLoading}
-                className="px-3 py-1.2 rounded-full bg-[#FAF8F5] hover:bg-[#F2ECE4] border border-[#E8E2D9] text-[10.5px] text-[#2C2724] font-medium transition-all active:scale-95 shadow-2xs hover:border-[#111111]/30"
+                className={`px-3 py-1.2 rounded-full bg-[#FAF8F5] hover:bg-[#F2ECE4] border border-[#E8E2D9] text-[10.5px] text-[#2C2724] font-medium transition-all active:scale-95 shadow-2xs hover:border-[#111111]/30 ${
+                  brief.desktopOnly ? 'hidden md:inline-flex' : 'inline-flex'
+                }`}
               >
                 {brief.label}
               </button>
